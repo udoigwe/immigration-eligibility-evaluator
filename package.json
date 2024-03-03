@@ -1,5 +1,5 @@
 {
-  "name": "emigr8",
+  "name": "immigration-eligibility-evaluator",
   "version": "1.0.0",
   "description": "Immigration Eligibility Evaluator (IEE)",
   "main": "index.js",

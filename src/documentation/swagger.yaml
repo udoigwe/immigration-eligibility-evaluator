@@ -1,0 +1,219 @@
+openapi: 3.1.0
+info:
+  title: Immigration Eligibility Evaluator
+  version: 1.0.0
+  description: An application developed to provide a transparent and accessible tool for assessing immigration eligibility
+  license:
+    name: MIT
+    url: https://spdx.org/licenses/MIT.html
+  contact:
+    name: Ijeoma Eze
+    url: #
+    email: udoigweuchechukwu@gmail.com
+    phone: +2348065198300
+servers:
+  - url: http://localhost:8001/api/v1
+    description: Development Server
+tags:
+  - name: Authentication
+    description: User Authentication Endpoints
+components:
+  schemas:
+    error:
+      type: boolean
+    signUpDTO:
+      type: object
+      required:
+        - first_name
+        - last_name
+        - email
+        - gender
+        - password
+        - nationality
+        - dob
+      properties:
+        first_name:
+          type: string
+          description: User first name
+        last_name:
+          type: string
+          description: User last name
+        email:
+          type: string
+          description: Email of user
+        gender:
+          type: string
+          description: User gender
+          enum: [Male, Female]
+        password:
+          type: string
+          description: Very strong password
+        nationality:
+          type: string
+          description: User nationality
+        dob:
+          type: string
+          description: User Date Of Birth. Format(YYYY-MM-DD)
+      example:
+        first_name: Jon
+        last_name: Snow
+        email: jonsnow@example.com
+        gender: Male
+        password: iee2024
+        nationality: Canada
+        dob: '1987-10-10'
+    loginDTO:
+      type: object
+      required:
+        - email
+        - password
+      properties:
+        email:
+          type: string
+          description: User email
+        password:
+          type: string
+          description: User stored password
+      example:
+        email: jonsnow@example.com
+        password: iee2024
+    errorResponse:
+      type: object
+      properties:
+        error:
+          type: boolean
+        message:
+          type: string
+    messageResponse:
+      type: object
+      properties:
+        error:
+          type: boolean
+          example: false
+        message:
+          type: string
+    paginationResponse:
+      type: object
+      properties:
+        totalRecords:
+          type: integer
+          description: Total number of records
+        totalPages:
+          type: integer
+          description: Total number of pages
+          nullable: true
+        currentPage:
+          type: integer
+          description: Current page (null if there's no page detail)
+          nullable: true
+        itemsPerPage:
+          type: integer
+          description: Items per page (null if there's no page detail)
+          nullable: true
+        nextPage:
+          type: "integer"
+          description: Next page number (null if there's no next page)
+          nullable: true
+        prevPage:
+          type: integer
+          description: Previous page number (null if there's no previous page)
+          nullable: true
+    userResponse:
+      type: object
+      properties:
+        user_id:
+          type: integer
+        first_name:
+          type: string
+        last_name:
+          type: string
+        dob:
+          type: string
+        gender: 
+          type: string
+        email:
+          type: string
+        nationality:
+          type: string
+        created_at:
+          type: string
+        user_status:
+          type: string
+    loginResponseData:
+      type: object
+      properties:
+        error:
+          type: boolean
+          $ref: '#/components/schemas/error'
+        user:
+          type: object
+          $ref: '#/components/schemas/userResponse'
+        token:
+          type: string
+          format: jwt
+          description: User authentication token for request
+        message: string
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-access-token
+paths:
+  /sign-up:
+    post:
+      summary: Signup endpoint
+      tags: [Authentication]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/signUpDTO'
+      responses:
+        200:
+          description: Sign Up Completed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/messageResponse'
+        400:
+          description: An error occured
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorResponse'
+        500:
+          description: Some server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorResponse'
+  /login:
+    post:
+      summary: Login endpoint
+      tags: [Authentication]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loginDTO'
+      responses:
+        200:
+          description: Login successful.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loginResponseData'
+        400:
+          description: An error occured
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorResponse'
+        500:
+          description: Some server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorResponse'

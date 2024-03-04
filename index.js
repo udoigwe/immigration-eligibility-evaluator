@@ -19,11 +19,21 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 app.use(useragent.express());
+
+//static files
 app.use(express.static(__dirname + '/public'));
+app.use('/assets', express.static(__dirname + '/public/assets'));
+
+//set templating engine
+app.set('view engine', 'ejs');
+app.set('views', './src/views');
 
 //importing all required routes
 const authRoutes = require('./src/routes/auth');
 const errorHandler = require('./src/middleware/errorHandler');
+
+//importing all view routes
+const viewRoutes = require('./src/routes/view')
 
 // Parse YAML Swagger documentation to JSON
 const swaggerFile = fs.readFileSync('./src/documentation/swagger.yaml', 'utf8');
@@ -31,6 +41,9 @@ const swaggerDocument = yaml.load(swaggerFile);
 
 //using imported routes
 app.use(process.env.ROUTE_PREFIX, authRoutes);
+
+//using imported view routes
+app.use(viewRoutes);
 
 // Serve Swagger documentation at /api/docs
 app.use(process.env.API_DOCS_ROUTE_PREFIX, swaggerUi.serve);

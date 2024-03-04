@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <%- include('./partials/head') %>
+    </head>
+
+    <body class="loading authentication-bg authentication-bg-pattern">
+
+        <div class="account-pages mt-5 mb-5">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-md-8 col-lg-6 col-xl-4">
+                        <div class="text-center">
+                            <a href="/">
+                                <img src="/assets/images/logo-dark.png" alt="" height="22" class="mx-auto">
+                            </a>
+                            <p class="text-muted mt-2 mb-4">Simplifying Your Immigration needs</p>
+                        </div>
+                        <div class="card">
+
+                            <div class="card-body p-4">
+                                
+                                <div class="text-center mb-4">
+                                    <h4 class="text-uppercase mt-0">Register</h4>
+                                </div>
+
+                                <form action="#" id="register-form">
+
+                                    <div class="mb-3">
+                                        <label for="first_name" class="form-label">First Name</label>
+                                        <input class="form-control required" type="text" id="first_name" name="first_name" placeholder="Enter your first name" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="last_name" class="form-label">Last Name</label>
+                                        <input class="form-control" type="text" id="last_name" name="last_name" placeholder="Enter your last name" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="gender" class="form-label">Gender</label>
+                                        <select id="gender" name="gender" class="form-control required">
+                                            <option value="">Please select</option>
+                                            <option value="Male">Male</option>
+                                            <option value="Female">Female</option>
+                                        </select>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="email" class="form-label">Email address</label>
+                                        <input class="form-control required" type="email" id="email" name="email" required placeholder="Enter your email">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="nationality" class="form-label">Nationality</label>
+                                        <select id="nationality" name="nationality" class="form-control required">
+                                            <option value="">Please select</option>
+                                            <option value="United States">United States</option>
+                                            <option value="Nigeria">Nigeria</option>
+                                            <option value="India">India</option>
+                                            <option value="United Kingdom">United Kingdom</option>
+                                            <option value="Australia">Australia</option>
+                                            <option value="Argentina">Argentina</option>
+                                        </select>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="dob" class="form-label">Date Of Birth</label>
+                                        <input class="form-control required" type="date" id="dob" name="dob" required placeholder="YYYY-MM-DD" pattern="\d{4}-\d{2}-\d{2}">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="password" class="form-label">Password</label>
+                                        <input class="form-control required" type="password" required id="password" name="password" placeholder="Enter your password">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="re-password" class="form-label">Confirm Password</label>
+                                        <input class="form-control required" type="password" required id="re-password" name="re-password" placeholder="Must Match Password">
+                                    </div>
+                                    <div class="mb-3 text-center d-grid">
+                                        <button class="btn btn-primary" type="submit"> Sign Up </button>
+                                    </div>
+
+                                </form>
+
+                            </div> <!-- end card-body -->
+                        </div>
+                        <!-- end card -->
+
+                        <div class="row mt-3">
+                            <div class="col-12 text-center">
+                                <p class="text-muted">Already have account?  <a href="/sign-in" class="text-dark ms-1"><b>Sign In</b></a></p>
+                            </div> <!-- end col -->
+                        </div>
+                        <!-- end row -->
+
+                    </div> <!-- end col -->
+                </div>
+                <!-- end row -->
+            </div>
+            <!-- end container -->
+        </div>
+        <!-- end page -->
+
+        <%- include('./partials/scripts') %>
+        <script src="/assets/js/modules/authentication.js"></script>
+        
+    </body>
+</html>

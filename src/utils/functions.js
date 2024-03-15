@@ -2,6 +2,7 @@ const pool = require("./dbConfig");
 const jwt = require('jsonwebtoken');
 const { validationResult } = require('express-validator');
 const CustomError = require("./CustomError");
+const nodemailer = require('nodemailer');
 
 exports.validateEmail = (email) => {
     
@@ -118,6 +119,37 @@ exports.getCustomColumns = async (customQuery) => {
         const customColumns = result.fields.map(field => field.name);
 
         return customColumns;
+    }
+    catch(e)
+    {
+        throw e;
+    }
+}
+
+exports.sendMail = async (to, subject, html) => {
+    const transporter = nodemailer.createTransport({
+        host: 'smtp.gmail.com',
+        port: 2525,
+        auth: {
+            user: process.env.GMAIL_USER,
+            pass: process.env.GMAIL_PASSWORD
+        }
+    });
+
+    const mailOptions = {
+        from: `"Immigration Evaluator" <${process.env.GMAIL_USER}>`,
+        to,
+        subject,
+        html
+    };
+
+    try
+    {
+        /* const info = await transporter.sendMail(mailOptions);
+        console.log('Email sent:', info.response);
+        return true; // Email sent successfully */
+        await transporter.sendMail(mailOptions);
+        return true;
     }
     catch(e)
     {

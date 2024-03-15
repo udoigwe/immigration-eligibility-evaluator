@@ -124,51 +124,45 @@ function payloadClaim(token, param)
 }
 
 //display user profile
-function displayUserProfile()
+function displayProfile()
 {
     var token = sessionStorage.getItem('token'); //access token
 
     if(token !== null && token !== "")
     {
-        var id = payloadClaim(token, 'user_id')
-        var email = payloadClaim(token, 'user_email');
-        var role = payloadClaim(token, 'user_role');
-        var firstname = payloadClaim(token, 'user_firstname');
-        var avatar = payloadClaim(token, 'user_image_url') ? payloadClaim(token, 'user_image_url') : `../../assets/images/avatar.png`;
+        var firstname = payloadClaim(token, 'first_name');
+        var lastname = payloadClaim(token, 'last_name');
+        var fullname = `${firstname} ${lastname}`;
 
-        $('.user-firstname').text(firstname);
-        $('.user-role').text(role);
+        $('.user-first-name').text(firstname);
+        $('.user-name').text(fullname);
     }
-}
-
-function showSignOutMessage() {
-    swal({
-        title: "Sign Out?",
-        text: "Are you sure you want to sign out this user?",
-        type: "warning",
-        showCancelButton: true,
-        padding: '2em'
-        //closeOnConfirm: false,
-        //showLoaderOnConfirm: true,
-    }).then(function(result) {
-        if(result.value)
-        {
-            signOut();
-        }
-    });
 }
 
 function signOut()
 {
     var token = sessionStorage.getItem('token'); //access token
-    
-    blockUI();
+    var firstname = payloadClaim(token, 'first_name');
 
-    //clear all stored sessions
-    sessionStorage.clear();
-                
-    //redirect to login screeen
-    window.location = '/signin';        
+    const confirm = window.confirm(`Are you sure you want to sign ${firstname}?`);
+
+    // Check the result of the confirmation
+    if (confirm) {
+        
+
+        blockUI();
+
+        //clear all stored sessions
+        sessionStorage.clear();
+                    
+        //redirect to login screeen
+        window.location = '/sign-in';
+    } 
+    else 
+    {
+        alert("Please continue");
+        // Perform the action you want to execute when the user clicks Cancel or closes the dialog
+    }       
 }
 
 function formatNumber(num) {

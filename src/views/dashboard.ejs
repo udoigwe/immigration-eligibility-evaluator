@@ -3,53 +3,15 @@
     <head>
         <%- include('./partials/head') %>
     </head>
-    <body onload="isAuthenticated(); displayProfile();">
-        <div class="container-fluid">
-            <div class="mx-auto">
-                Welcome <span id="first_name" style="font-weight: 900; font-size: 20px;"></span>
-            </div>
-            <center style="margin-top: 20%;">
-                <button style="padding: 10px; border-radius: 10px;" onclick="logout();" class="text-dark ms-1"><b>Sign Out</b></button>
-            </center>
+    <body onload="isAuthenticated(); displayProfile();" class="loading" data-layout-color="light"  data-layout-mode="default" data-layout-size="fluid" data-topbar-color="light" data-leftbar-position="fixed" data-leftbar-color="light" data-leftbar-size='default' data-sidebar-user='true'>
+        <!-- Begin page -->
+        <div id="wrapper">
+            <%- include('./partials/topBar') %>
+            
+            <%- include('./partials/sideBar') %>
         </div>
+        <!-- END wrapper -->
 
         <%- include('./partials/scripts') %>
-
-        <script>
-            function displayProfile()
-            {
-                var token = sessionStorage.getItem('token'); //access token
-                var firstname = payloadClaim(token, 'first_name');
-
-                $('#first_name').html(firstname)
-            }
-
-            function logout()
-            {
-                var token = sessionStorage.getItem('token'); //access token
-                var firstname = payloadClaim(token, 'first_name');
-
-                const confirm = window.confirm(`Are you sure you want to sign ${firstname}?`);
-
-                // Check the result of the confirmation
-                if (confirm) {
-                    
-    
-                    blockUI();
-            
-                    //clear all stored sessions
-                    sessionStorage.clear();
-                                
-                    //redirect to login screeen
-                    window.location = '/sign-in';
-                } 
-                else 
-                {
-                    alert("Please continue");
-                    // Perform the action you want to execute when the user clicks Cancel or closes the dialog
-                }
-                  
-            }
-        </script>
     </body>
 </html>

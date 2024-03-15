@@ -2,6 +2,7 @@ const pool = require("../utils/dbConfig");
 const jwt = require("jsonwebtoken");
 const moment = require("moment");
 const CustomError = require("../utils/CustomError");
+const { sendMail } = require("../utils/functions");
 
 module.exports = {
     signUp: async (req, res, next) => {
@@ -11,7 +12,7 @@ module.exports = {
             dob,
             gender,
             email,
-            nationality,
+            country_id,
             password
         } = req.body;
 
@@ -23,6 +24,9 @@ module.exports = {
         {
             // Get a connection from the pool
             connection = await pool.getConnection();
+
+            //start db transaction
+            //await connection.beginTransaction();
 
             //check if email already exists
             const [ users ] = await connection.execute(`
@@ -46,7 +50,7 @@ module.exports = {
                         dob,
                         gender,
                         email,
-                        nationality,
+                        country_id,
                         password,
                         created_at
                     )
@@ -58,11 +62,13 @@ module.exports = {
                     dob,
                     gender,
                     email,
-                    nationality,
+                    country_id,
                     password,
                     now
                 ]
             );
+
+            //await sendMail(email, "Email Confirmation", `<h3>Confirm Your Account</h3>`)
 
             res.json({
                 error: false,
@@ -71,6 +77,8 @@ module.exports = {
         }
         catch(e)
         {
+            connection ? connection.rollback() : null;
+
             next(e);
         }
         finally

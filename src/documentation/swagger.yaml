@@ -17,6 +17,12 @@ servers:
 tags:
   - name: Authentication
     description: User Authentication Endpoints
+  - name: Countries
+    description: Country Endpoints
+  - name: Immigration Types
+    description: Immigration Type Endpoints
+  - name: Criteria
+    description: Criteria Endpoints
 components:
   schemas:
     error:
@@ -29,7 +35,7 @@ components:
         - email
         - gender
         - password
-        - nationality
+        - country_id
         - dob
       properties:
         first_name:
@@ -48,9 +54,9 @@ components:
         password:
           type: string
           description: Very strong password
-        nationality:
-          type: string
-          description: User nationality
+        country_id:
+          type: integer
+          description: User country ID
         dob:
           type: string
           description: User Date Of Birth. Format(YYYY-MM-DD)
@@ -60,7 +66,7 @@ components:
         email: jonsnow@example.com
         gender: Male
         password: iee2024
-        nationality: Canada
+        nationality: 10
         dob: '1987-10-10'
     loginDTO:
       type: object
@@ -139,6 +145,60 @@ components:
           type: string
         user_status:
           type: string
+    countryResponse:
+      type: object
+      properties:
+        country_id:
+          type: integer
+        country_code:
+          type: string
+        country_name:
+          type: string
+        min_score:
+          type: integer
+        max_score:
+          type: integer
+        country_status:
+          type: string
+    immigrationTypeResponse:
+      type: object
+      properties:
+        immigration_type_id:
+          type: integer
+        immigration_type_name:
+          type: string
+        immigration_type_status:
+          type: string
+    criteriaResponse:
+      type: object
+      properties:
+        criteria_id:
+          type: integer
+        criteria_name:
+          type: string
+        display_question:
+          type: string
+        immigration_type_id:
+          type: integer
+        criteria_status:
+          type: string
+        options:
+          type: array
+          items:
+            $ref: '#/components/schemas/criteriaOptionsResponse'
+    criteriaOptionsResponse:
+      type: object
+      properties:
+        option_id:
+          type: integer
+        option_name:
+          type: string
+        criteria_id:
+          type: integer
+        score:
+          type: integer
+        option_status:
+          type: string
     loginResponseData:
       type: object
       properties:
@@ -153,6 +213,58 @@ components:
           format: jwt
           description: User authentication token for request
         message: string
+    allCountryResponse:
+      type: object
+      properties:
+        error:
+          type: boolean
+          $ref: '#/components/schemas/error'
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/countryResponse'
+        paginationData:
+          type: object
+          $ref: '#/components/schemas/paginationResponse'
+    allImmigrationTypeResponse:
+      type: object
+      properties:
+        error:
+          type: boolean
+          $ref: '#/components/schemas/error'
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/immigrationTypeResponse'
+        paginationData:
+          type: object
+          $ref: '#/components/schemas/paginationResponse'
+    allCriteriaResponse:
+      type: object
+      properties:
+        error:
+          type: boolean
+          $ref: '#/components/schemas/error'
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/criteriaResponse'
+        paginationData:
+          type: object
+          $ref: '#/components/schemas/paginationResponse'
+    allCriteriaOptionsResponse:
+      type: object
+      properties:
+        error:
+          type: boolean
+          $ref: '#/components/schemas/error'
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/criteriaOptionsResponse'
+        paginationData:
+          type: object
+          $ref: '#/components/schemas/paginationResponse'
   securitySchemes:
     ApiKeyAuth:
       type: apiKey
@@ -213,6 +325,162 @@ paths:
                 $ref: '#/components/schemas/errorResponse'
         500:
           description: Some server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorResponse'
+  /countries:
+    get: 
+      summary: Get All Countries
+      tags: [Countries]
+      parameters:
+        - name: status
+          in: query
+          required: false
+          description: Country Status
+          schema:
+            type: string
+        - name: page
+          in: query
+          required: false
+          description: Page number (optional but compolsory if perPage is available)
+          schema:
+            type: integer
+        - name: perPage
+          in: query
+          required: false
+          description: Items per page (optional but compolsory if page is available)
+          schema:
+            type: integer
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/allCountryResponse'
+        500:
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorResponse'
+  /immigration-types:
+    get: 
+      summary: Get All Immigration Types
+      tags: [Immigration Types]
+      parameters:
+        - name: immigration_type_status
+          in: query
+          required: false
+          description: Immigration Type Status
+          schema:
+            type: string
+        - name: page
+          in: query
+          required: false
+          description: Page number (optional but compolsory if perPage is available)
+          schema:
+            type: integer
+        - name: perPage
+          in: query
+          required: false
+          description: Items per page (optional but compolsory if page is available)
+          schema:
+            type: integer
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/allImmigrationTypeResponse'
+        500:
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorResponse'
+  /criteria:
+    get: 
+      summary: Get All Criteria
+      tags: [Criteria]
+      parameters:
+        - name: immigration_type_id
+          in: query
+          required: false
+          description: Immigration Type ID
+          schema:
+            type: integer
+        - name: criteria_status
+          in: query
+          required: false
+          description: Criteria Status
+          schema:
+            type: string
+        - name: page
+          in: query
+          required: false
+          description: Page number (optional but compolsory if perPage is available)
+          schema:
+            type: integer
+        - name: perPage
+          in: query
+          required: false
+          description: Items per page (optional but compolsory if page is available)
+          schema:
+            type: integer
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/allCriteriaResponse'
+        500:
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorResponse'
+  /criteria-options:
+    get: 
+      summary: Get All Criteria Options
+      tags: [Criteria]
+      parameters:
+        - name: criteria_id
+          in: query
+          required: false
+          description: Criteria ID
+          schema:
+            type: integer
+        - name: option_status
+          in: query
+          required: false
+          description: Criteria Option Status
+          schema:
+            type: string
+        - name: page
+          in: query
+          required: false
+          description: Page number (optional but compolsory if perPage is available)
+          schema:
+            type: integer
+        - name: perPage
+          in: query
+          required: false
+          description: Items per page (optional but compolsory if page is available)
+          schema:
+            type: integer
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/allCriteriaOptionsResponse'
+        500:
+          description: Server error
           content:
             application/json:
               schema:

@@ -19,9 +19,11 @@ module.exports = {
         body("password")
             .exists({ checkFalsy: true })
             .withMessage("Password is required"),
-        body("nationality")
+        body("country_id")
             .exists({ checkFalsy: true })
-            .withMessage("Nationality is required"),
+            .withMessage("Nationality is required")
+            .isNumeric()
+            .withMessage("Nationality must be digits"),
         body("dob")
             .exists({ checkFalsy: true })
             .withMessage("Date Of Birth is required")

@@ -8,5 +8,6 @@ router.get('/register', viewsController.signUp);
 
 /* Protected pages */
 router.get('/dashboard', viewsController.dashboard);
+router.get('/applications', viewsController.applications);
 
 module.exports = router;

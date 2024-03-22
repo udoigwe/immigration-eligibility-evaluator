@@ -1,3 +1,4 @@
+const CustomError = require("../utils/CustomError");
 const pool = require("../utils/dbConfig");
 
 module.exports = {
@@ -151,6 +152,47 @@ module.exports = {
         {
             connection ? await connection.rollback() : null;
             next(e)
+        }
+        finally
+        {
+            connection ? connection.release() : null;
+        }
+    },
+    findSuitableCountries: async (req, res, next) => {
+        const {
+            visaCategoryID
+        } = req.body;
+
+        const suitableCountries = [];
+
+        let connection;
+
+        try
+        {
+            //instantiate db connection
+            connection = await pool.getConnection();
+
+            //get all available countries
+            const [ countries ] = await connection.execute(`
+                SELECT *
+                FROM countries
+                ORDER BY CountryName ASC`,
+            );
+
+            if(countries.length === 0)
+            {
+                throw new CustomError(404, "No countries found");
+            }
+
+            //iterate through all countries to get applicant score from profile
+            for(let i = 0; i < countries.length; i++)
+            {
+                const country = countries[i];
+            }
+        }
+        catch(e)
+        {
+            next(e);
         }
         finally
         {

@@ -13,5 +13,6 @@ router.get('/password-recovery', viewsController.passwordRecovery);
 router.get('/dashboard', viewsController.dashboard);
 router.get('/applications', viewsController.applications);
 router.get('/suitable-countries', viewsController.findSuitableCountries);
+router.get('/account', viewsController.account);
 
 module.exports = router;

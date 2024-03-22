@@ -185,6 +185,11 @@ module.exports = {
                 ORDER BY CountryName ASC`,
             );
 
+            if(loggedUser.profile_completion_status === "Uncompleted")
+            {
+                throw new Error(400, "You must complete your profile before accessing this feature");
+            }
+
             if(countries.length === 0)
             {
                 throw new CustomError(404, "No countries found");

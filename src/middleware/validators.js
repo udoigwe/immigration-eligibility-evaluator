@@ -10,6 +10,7 @@ module.exports = {
     verifyAccount: validate(authValidations.verifyAccount),
     sendPasswordRecoveryEmail: validate(authValidations.sendPasswordRecoveryMail),
     changePassword: validate(authValidations.changePassword),
+    resetPassword: validate(authValidations.resetPassword),
     profileUpdate: validate(authValidations.profileUpdate),
 
     /* Applications route validators */

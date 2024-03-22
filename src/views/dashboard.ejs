@@ -3,15 +3,108 @@
     <head>
         <%- include('./partials/head') %>
     </head>
-    <body onload="isAuthenticated(); displayProfile();" class="loading" data-layout-color="light"  data-layout-mode="default" data-layout-size="fluid" data-topbar-color="light" data-leftbar-position="fixed" data-leftbar-color="light" data-leftbar-size='default' data-sidebar-user='true'>
+    <body onload="isAuthenticated(); displayProfile(); updateProfilePopUp();" class="loading" data-layout-color="light"  data-layout-mode="default" data-layout-size="fluid" data-topbar-color="light" data-leftbar-position="fixed" data-leftbar-color="light" data-leftbar-size='default' data-sidebar-user='true'>
         <!-- Begin page -->
         <div id="wrapper">
             <%- include('./partials/topBar') %>
             
             <%- include('./partials/sideBar') %>
+
+            <div class="content-page">
+                <div class="content">
+
+                    <!-- Start Content-->
+                    <div class="container-fluid">
+
+                        <!-- Form row -->
+                        <div class="row">
+                            <div class="col-md-6 col-12">
+                                <div class="card card-body">
+                                    <h1 class="card-title mx-auto text-center">GENDER</h1>
+
+                                    <h4 class="card-text gender mx-auto text-center"></h4>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-12">
+                                <div class="card card-body">
+                                    <h1 class="card-title mx-auto text-center">DATE OF BIRTH</h1>
+
+                                    <h4 class="card-text date_of_birth mx-auto text-center"></h4>
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-12">
+                                <div class="card card-body">
+                                    <h1 class="card-title mx-auto text-center">NATIONALITY</h1>
+
+                                    <h4 class="card-text nationality mx-auto text-center"></h4>
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-12">
+                                <div class="card card-body">
+                                    <h1 class="card-title mx-auto text-center">MARITAL STATUS</h1>
+
+                                    <h4 class="card-text marital-status mx-auto text-center"></h4>
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-12">
+                                <div class="card card-body">
+                                    <h1 class="card-title mx-auto text-center">EDUCATIONAL LEVEL</h1>
+
+                                    <h4 class="card-text mx-auto educational-level text-center"></h4>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-12">
+                                <div class="card card-body">
+                                    <h1 class="card-title mx-auto text-center">YEARS OF WORK EXPERIENCE</h1>
+
+                                    <h4 class="card-text mx-auto years-of-experience text-center"></h4>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-12">
+                                <div class="card card-body">
+                                    <h1 class="card-title mx-auto text-center">LANGUAGE PROFICIENCY</h1>
+
+                                    <h4 class="card-text mx-auto language-proficiency text-center"></h4>
+                                </div>
+                            </div>
+                            
+                        </div>
+                            
+                        <!-- end row -->
+                        
+                    </div> <!-- container -->
+
+                </div> <!-- content -->
+
+                <!-- Footer Start -->
+                <footer class="footer">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <script>document.write(new Date().getFullYear())</script> &copy; Immigration Eligibility Evaluator
+                            </div>
+                            <div class="col-md-6">
+                                <div class="text-md-end footer-links d-none d-sm-block">
+                                    <a href="javascript:void(0);">About Us</a>
+                                    <a href="javascript:void(0);">Help</a>
+                                    <a href="javascript:void(0);">Contact Us</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </footer>
+                <!-- end Footer -->
+
+            </div>
+
+            <!-- ============================================================== -->
+            <!-- End Page content -->
+            <!-- ============================================================== -->
         </div>
         <!-- END wrapper -->
 
+        <%- include('./partials/profileUpdateModal') %>
         <%- include('./partials/scripts') %>
+        <script src="/assets/js/modules/dashboard.js"></script>
     </body>
 </html>

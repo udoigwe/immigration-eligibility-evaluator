@@ -83,6 +83,82 @@ components:
       example:
         email: jonsnow@example.com
         password: iee2024
+    resendOTPDTO:
+      type: object
+      required:
+        - email
+      properties:
+        email:
+          type: string
+          description: Email to be verified
+    verifyAccountDTO:
+      type: object
+      required:
+        - email
+        - otp
+      properties:
+        email:
+          type: string
+          description: Email to be verified
+        otp:
+          type: string
+          description: OTP to be verified
+    sendPasswordRecoveryMailDTO:
+      type: object
+      required:
+        - email
+      properties:
+        email:
+          type: string
+          description: Recipient Email address
+    changePasswordDTO:
+      type: object
+      required:
+        - email
+        - salt
+        - password
+      properties:
+        email:
+          type: string
+          description: Recipient Email address
+        salt:
+          type: string
+          description: Security salt
+        password:
+          type: string
+          description: Preffered password
+    profileUpdateDTO:
+      type: object
+      required:
+        - gender
+        - date_of_birth
+        - nationality
+        - marital_status
+        - education_level
+        - years_of_experience
+        - language_proficiency
+      properties:
+        gender:
+          type: string
+          description: User Gender
+        date_of_birth:
+          type: string
+          description: User Date of Birth
+        nationality:
+          type: string
+          description: User Nationality
+        marital_status:
+          type: string
+          description: User Marital Status
+        education_level:
+          type: string
+          description: User educational level
+        years_of_experience:
+          type: string
+          description: User Years of Work Experience
+        language_proficiency:
+          type: string
+          description: User Language proficiency
     errorResponse:
       type: object
       properties:
@@ -317,6 +393,153 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/loginResponseData'
+        400:
+          description: An error occured
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorResponse'
+        500:
+          description: Some server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorResponse'
+  /resend-otp:
+    post:
+      summary: Resend OTP endpoint
+      tags: [Authentication]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/resendOTPDTO'
+      responses:
+        200:
+          description: OTP resent successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/messageResponse'
+        400:
+          description: An error occured
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorResponse'
+        500:
+          description: Some server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorResponse'
+  /verify-account:
+    post:
+      summary: Account Verification endpoint
+      tags: [Authentication]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/verifyAccountDTO'
+      responses:
+        200:
+          description: Account verified successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/messageResponse'
+        400:
+          description: An error occured
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorResponse'
+        500:
+          description: Some server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorResponse'
+  /send-password-recovery-mail:
+    post:
+      summary: Send Password Recovery Mail endpoint
+      tags: [Authentication]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/sendPasswordRecoveryMailDTO'
+      responses:
+        200:
+          description: Recover email sent successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/messageResponse'
+        400:
+          description: An error occured
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorResponse'
+        500:
+          description: Some server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorResponse'
+  /change-password:
+    post:
+      summary: Change password endpoint
+      tags: [Authentication]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/changePasswordDTO'
+      responses:
+        200:
+          description: Password changed successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/messageResponse'
+        400:
+          description: An error occured
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorResponse'
+        500:
+          description: Some server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorResponse'
+  /profile-update:
+    post:
+      summary: Update User Profile Endpoint
+      tags: [Authentication]
+      security:
+        - ApiKeyAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/profileUpdateDTO'
+      responses:
+        200:
+          description: User Profile updated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/messageResponse'
         400:
           description: An error occured
           content:

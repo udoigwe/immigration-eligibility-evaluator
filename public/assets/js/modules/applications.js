@@ -258,7 +258,7 @@ $(function () {
                     let html = '';
                     let emptyHTML = `
                         <div class="card card-body" style="margin-bottom: 20px; text-transform: uppercase; background-color: #F0F0F0">
-                            <h5 class="card-text date_of_birth mx-auto text-center">Your profile is not suitable for any county. Please improve your profile</h4>
+                            <h5 class="card-text date_of_birth mx-auto text-center">Your profile is not suitable for any country. Please improve your profile</h4>
                         </div>
                     `
 

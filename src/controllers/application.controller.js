@@ -169,7 +169,6 @@ module.exports = {
         const suitableCountries = [];
         const benchMark = 20;
         let totalPoints = 0
-        const userAge = calculateAge(loggedUser.date_of_birth.slice(0, 10));
 
         let connection;
 
@@ -194,6 +193,8 @@ module.exports = {
             {
                 throw new CustomError(404, "No countries found");
             }
+
+            const userAge = calculateAge(loggedUser.date_of_birth.slice(0, 10));
 
             //iterate through all countries to get applicant score from profile
             for(let i = 0; i < countries.length; i++)

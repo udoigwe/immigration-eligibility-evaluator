@@ -10,7 +10,9 @@ $(function () {
         //register
         register();
         //load countries
-        loadCountries();
+        //loadCountries();
+        //recover password
+        recoverPassword();
     });
 
     function login()
@@ -127,9 +129,9 @@ $(function () {
                 success: function(response)
                 {
                     unblockUI();
-                    //showSimpleMessage("Success", response.message, "success");
+                    alert(response.message);
                     form.get(0).reset();
-                    window.location = '/sign-in';
+                    window.location = `/account-verification?email=${email}`;
                 },
                 error: function(req, status, err)
                 {
@@ -165,13 +167,69 @@ $(function () {
                 }
 
                 $('#country_id').html(html);
-                
+
                 unblockUI();
             },
             error: function(req, status, err)
             {
                 alert(req.responseJSON.message)
                 unblockUI();
+            }
+        });
+    }
+
+    function recoverPassword()
+    {
+        $('#recovery-form').on('submit', function(e){
+            e.preventDefault();
+            var form = $(this);
+            var email = $("#email").val();
+            var fields = form.find('input.required, select.required');
+            
+            blockUI();
+
+            for(var i=0;i<fields.length;i++)
+            {
+                if(fields[i].value === "")
+                {
+                    /*alert(fields[i].id)*/
+                    unblockUI();
+                    //showSimpleMessage("Attention", `${fields[i].name} is required`, "error");
+                    alert(`${fields[i].name} is required`)
+                    $('#'+fields[i].id).focus();
+                    return false;
+                }
+            }
+            
+            if(!validateEmail(email))
+            {
+                //alert("All fields are required");
+               //showSimpleMessage("Attention", "Please provide a valid email address", "error");
+               alert("Please provide a valid email address")
+               unblockUI();
+               return false;
+            }
+            else
+            {
+                $.ajax({
+                    type: 'POST',
+                    url: API_URL_ROOT+'/send-password-recovery-mail',
+                    data: JSON.stringify(form.serializeObject()),
+                    dataType: 'json',
+                    contentType: 'application/json',
+                    success: function(response)
+                    {
+                        unblockUI();
+                        form.get(0).reset();
+                        alert(response.message)
+                    },
+                    error: function(req, status, err)
+                    {
+                        //showSimpleMessage("Attention", "ERROR - "+req.status+" : "+req.responseText, "error");
+                        alert(req.responseJSON.message);
+                        unblockUI();
+                    }
+                });
             }
         });
     }

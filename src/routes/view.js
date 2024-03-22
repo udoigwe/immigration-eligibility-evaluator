@@ -12,5 +12,6 @@ router.get('/password-recovery', viewsController.passwordRecovery);
 /* Protected pages */
 router.get('/dashboard', viewsController.dashboard);
 router.get('/applications', viewsController.applications);
+router.get('/suitable-countries', viewsController.findSuitableCountries);
 
 module.exports = router;

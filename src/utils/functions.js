@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken');
 const { validationResult } = require('express-validator');
 const CustomError = require("./CustomError");
 const nodemailer = require('nodemailer');
+const moment = require('moment');
 
 exports.validateEmail = (email) => {
     
@@ -152,4 +153,13 @@ exports.sendMail = async (to, subject, html) => {
     {
         throw e;
     }
+}
+
+exports.calculateAge = (dateOfBirth) => {
+    const dob = moment(dateOfBirth, 'YYYY-MM-DD', true);
+    const now = moment();
+
+    const age = now.diff(dob, 'years');
+
+    return age;
 }

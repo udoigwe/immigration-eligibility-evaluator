@@ -25,4 +25,7 @@ module.exports = {
     applications: async (req, res) => {
         res.render('applications', { title:'Applications', page_title: 'Applications'})
     },
+    findSuitableCountries: async (req, res) => {
+        res.render('suitableCountries', { title:'Suitable Countries', page_title: 'Find Suitable Countries'})
+    },
 }

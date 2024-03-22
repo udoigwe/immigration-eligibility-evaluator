@@ -6,14 +6,15 @@ $(function () {
 
 	$(document).ready(function($) {
         //load countries
-        loadCountries();
+        //loadCountries();
         //load immigration types
-        loadImmigrationTypes();
+        //loadImmigrationTypes();
         //submit immigration eligibility evaulation form
-        submit();
+        //submit();
+        findSuitableCountries();
 
         //handle immigration type change
-        $('#immigration_type_id').on('change', function(){
+        /* $('#immigration_type_id').on('change', function(){
             //clear the criteria list html
             $('.criteria-list').html('');
             //get the value of the option
@@ -23,7 +24,7 @@ $(function () {
             {
                 loadCriteria(value)
             }
-        })
+        }) */
     });
 
     function loadCountries()
@@ -209,6 +210,75 @@ $(function () {
                     form.get(0).reset();
                     criteriaListDiv.html("");
                     alert(response.message);
+                    unblockUI();
+                },
+                error: function(req, status, err)
+                {
+                    console.log(req)
+                    alert(req.responseJSON.message);
+                    unblockUI();
+                }
+            });
+        });
+    }
+
+    function findSuitableCountries()
+    {
+        $('#suitable-countries-form').on('submit', function(e){
+            e.preventDefault();
+            var form = $(this);
+            var fields = form.find('input.required, select.required');
+            
+            blockUI();
+
+            for(var i=0;i<fields.length;i++)
+            {
+                if(fields[i].value === "")
+                {
+                    /*alert(fields[i].id)*/
+                    unblockUI();
+                    //showSimpleMessage("Attention", `${fields[i].name} is required`, "error");
+                    //alert(`${fields[i].name} is required`)
+                    alert('All fields are required');
+                    $('#'+fields[i].id).focus();
+                    return false;
+                }
+            }
+        
+            $.ajax({
+                type: 'POST',
+                url: API_URL_ROOT+'/find-suitable-countries',
+                data: JSON.stringify(form.serializeObject()),
+                dataType: 'json',
+                contentType: 'application/json',
+                headers:{'x-access-token':token},
+                success: function(response)
+                {
+                    const suitableCountries = response.suitableCountries;
+                    let html = '';
+                    let emptyHTML = `
+                        <div class="card card-body" style="margin-bottom: 20px; text-transform: uppercase; background-color: #F0F0F0">
+                            <h5 class="card-text date_of_birth mx-auto text-center">Your profile is not suitable for any county. Please improve your profile</h4>
+                        </div>
+                    `
+
+                    for(var i = 0; i < suitableCountries.length; i++)
+                    {
+                        const suitableCountry = suitableCountries[i];
+
+                        html += `
+                            <div class="card card-body" style="margin-bottom: 20px; text-transform: uppercase; background-color: #F0F0F0">
+                                <h3 class="card-title mx-auto text-center">${suitableCountry.country}</h1>
+                                <h5 class="card-text date_of_birth mx-auto text-center">Score: ${suitableCountry.score}</h4>
+                            </div>
+                        `
+                    }
+
+                    $('#country-list').html(suitableCountries.length === 0 ? emptyHTML : html);
+                    $("#countryDisplay").modal("show");
+
+                    //clear the form;
+                    form.get(0).reset();
                     unblockUI();
                 },
                 error: function(req, status, err)

@@ -17,5 +17,12 @@ module.exports = {
             .withMessage("Criteria Options is required")
             .isArray()
             .withMessage("Options must be an array")
-	]
+	],
+    findSuitableCountries: [
+		body("VisaCategoryID")
+			.exists({ checkFalsy: true })
+			.withMessage("Visa Category is required")
+            .isNumeric()
+            .withMessage("Visa Category ID must be a number")
+	],
 }

@@ -1,5 +1,6 @@
 const CustomError = require("../utils/CustomError");
 const pool = require("../utils/dbConfig");
+const { calculateAge } = require("../utils/functions");
 
 module.exports = {
     apply: async (req, res, next) => {
@@ -159,11 +160,16 @@ module.exports = {
         }
     },
     findSuitableCountries: async (req, res, next) => {
+        const loggedUser = req.userDecodedData;
+
         const {
-            visaCategoryID
+            VisaCategoryID
         } = req.body;
 
         const suitableCountries = [];
+        const benchMark = 20;
+        let totalPoints = 0
+        const userAge = calculateAge(loggedUser.date_of_birth.slice(0, 10));
 
         let connection;
 
@@ -187,8 +193,110 @@ module.exports = {
             //iterate through all countries to get applicant score from profile
             for(let i = 0; i < countries.length; i++)
             {
+                //instantiate one country
                 const country = countries[i];
+                let countryPoints = 0;
+
+                const [ criteria ] = await connection.execute(`
+                    SELECT a.*, b.*, c.CriterionName, d.CategoryName 
+                    FROM countrycriteria a 
+                    LEFT JOIN visacriteria b ON a.VisaCriteriaID = b.VisaCriteriaID 
+                    LEFT JOIN criteria c ON b.CriterionID = c.CriterionID 
+                    LEFT JOIN visacategories d ON b.VisaCategoryID = d.VisaCategoryID
+                    WHERE b.VisaCategoryID = ?
+                    AND a.CountryCode = ?`,
+                    [ 
+                        VisaCategoryID,
+                        country.CountryCode
+                    ]
+                )
+
+                for(let j = 0; j < criteria.length; j++)
+                {
+                    const criterion = criteria[j];
+
+                    if(criterion.CriterionName === "Age")
+                    {
+                        if(criterion.CriteriaOptions === "18-21" && userAge >= 18 && userAge <= 21)
+                        {
+                            countryPoints += criterion.PointsValue;
+                            totalPoints += criterion.PointsValue;
+                        }
+                        
+                        if(criterion.CriteriaOptions === "22-25" && userAge >= 22 && userAge <= 25)
+                        {
+                            countryPoints += criterion.PointsValue;
+                            totalPoints += criterion.PointsValue;
+                        }
+                        
+                        if(criterion.CriteriaOptions === "26-30" && userAge >= 26 && userAge <= 30)
+                        {
+                            countryPoints += criterion.PointsValue;
+                            totalPoints += criterion.PointsValue;
+                        }
+                        
+                        if(criterion.CriteriaOptions === "36-Above" && userAge >= 36)
+                        {
+                            countryPoints += criterion.PointsValue;
+                            totalPoints += criterion.PointsValue;
+                        }
+                    }
+
+                    if(criterion.CriterionName === "Highest Education Level" && criterion.CriteriaOptions === loggedUser.education_level)
+                    {
+                        countryPoints += criterion.PointsValue;
+                        totalPoints += criterion.PointsValue;
+                    }
+
+                    if(criterion.CriterionName === "Language Proficiency" && criterion.CriteriaOptions === loggedUser.language_proficiency)
+                    {
+                        countryPoints += criterion.PointsValue;
+                        totalPoints += criterion.PointsValue;
+                    }
+
+                    if(criterion.CriterionName === "Work Experience")
+                    {
+                        if(criterion.CriteriaOptions === "1-2 years" && loggedUser.years_of_experience >= 1 && loggedUser.years_of_experience <= 2)
+                        {
+                            countryPoints += criterion.PointsValue;
+                            totalPoints += criterion.PointsValue
+                        }
+                        
+                        if(criterion.CriteriaOptions === "3-5 years" && loggedUser.years_of_experience >= 3 && loggedUser.years_of_experience <= 5)
+                        {
+                            countryPoints += criterion.PointsValue;
+                            totalPoints += criterion.PointsValue;
+                        }
+                        
+                        if(criterion.CriteriaOptions === "6-10 years" && loggedUser.years_of_experience >= 6 && loggedUser.years_of_experience <= 10)
+                        {
+                            countryPoints += criterion.PointsValue;
+                            totalPoints += criterion.PointsValue
+                        }
+                        
+                        if(criterion.CriteriaOptions === "11 years and above" && loggedUser.years_of_experience >= 11)
+                        {
+                            countryPoints += criterion.PointsValue;
+                            totalPoints += criterion.PointsValue
+                        }
+                    }
+                }
+
+                const performance = {
+                    country: country.CountryName,
+                    score: countryPoints
+                };
+
+                if(countryPoints >= benchMark)
+                {
+                    suitableCountries.push(performance);
+                }
             }
+
+            res.json({
+                error: false,
+                suitableCountries
+            })
         }
         catch(e)
         {

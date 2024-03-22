@@ -13,5 +13,6 @@ module.exports = {
     profileUpdate: validate(authValidations.profileUpdate),
 
     /* Applications route validators */
-    apply: validate(applicationValidations.apply)
+    apply: validate(applicationValidations.apply),
+    findSuitableCountries: validate(applicationValidations.findSuitableCountries)
 }

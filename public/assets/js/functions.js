@@ -139,6 +139,17 @@ function displayProfile()
     }
 }
 
+function updateProfilePopUp()
+{
+    var token = sessionStorage.getItem('token'); //access token
+    var profileCompletionStatus = payloadClaim(token, 'profile_completion_status');
+
+    if(profileCompletionStatus == 'Uncompleted')
+    {
+        $("#staticBackdrop").modal("show");
+    }
+}
+
 function signOut()
 {
     var token = sessionStorage.getItem('token'); //access token
@@ -167,4 +178,10 @@ function signOut()
 
 function formatNumber(num) {
     return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
+}
+
+function getQueryParam(paramName) {
+    const currentUrl = new URL(window.location.href);
+    const urlParams = new URLSearchParams(currentUrl.search);
+    return urlParams.get(paramName);
 }

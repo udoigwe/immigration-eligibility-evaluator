@@ -526,4 +526,67 @@ module.exports = {
             connection ? connection.release() : null;
         }
     },
+    resetPassword: async (req, res, next) => {
+        const loggedUser = req.userDecodedData;
+
+        const {
+            current_password,
+            new_password
+        } = req.body;
+
+        let connection;
+
+        try
+        {
+            //instantiate db
+            connection = await pool.getConnection();
+
+            //get current password
+            const [ users ] = await connection.execute(`
+                SELECT password
+                FROM users
+                WHERE userID = ?
+                LIMIT 1`,
+                [ loggedUser.userID ]
+            );
+
+            if(users.length === 0)
+            {
+                throw new CustomError(404, "User not found");
+            }
+
+            const password = users[0].password;
+
+            //check if current password is equal to stored password
+            if(current_password !== password)
+            {
+                throw new CustomError(400, "Your current password must be same with the stored password")
+            }
+
+            //update password
+            await connection.execute(`
+                UPDATE users
+                SET
+                    password = ?
+                WHERE userID = ?`,
+                [ 
+                    new_password,
+                    loggedUser.userID
+                ]
+            );
+
+            res.json({
+                error: false,
+                message: "Password updated successfully"
+            })
+        }
+        catch(e)
+        {
+            next(e);
+        }
+        finally
+        {
+            connection ? connection.release() : null;
+        }
+    }
 }

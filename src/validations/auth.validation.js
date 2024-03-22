@@ -85,4 +85,12 @@ module.exports = {
 			.exists({ checkFalsy: true })
 			.withMessage("Language Proficiency is required"),
 	],
+	resetPassword: [
+		body("current_password")
+			.exists({ checkFalsy: true })
+			.withMessage("Current Password is required"),
+		body("new_password")
+			.exists({ checkFalsy: true })
+			.withMessage("New password is required")
+	],
 }

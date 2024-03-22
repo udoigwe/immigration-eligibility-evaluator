@@ -184,9 +184,22 @@ module.exports = {
                 ORDER BY CountryName ASC`,
             );
 
+            //fetch user profile
+            const [ profiles ] = await connection.execute(`
+                SELECT * FROM personalinformation
+                WHERE user_id = ?
+                LIMIT 1`,
+                [ loggedUser.userID ]
+            );
+
+            if(profiles.length === 0)
+            {
+                throw new CustomError(404, "You must complete your profile before accessing this feature");
+            }
+
             if(loggedUser.profile_completion_status === "Uncompleted")
             {
-                throw new Error(400, "You must complete your profile before accessing this feature");
+                throw new CustomError(400, "You must complete your profile before accessing this feature");
             }
 
             if(countries.length === 0)

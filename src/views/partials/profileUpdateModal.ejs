@@ -1,0 +1,67 @@
+<!-- Modal -->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Profile Update</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="profile-update-form">
+                    <div class="mb-3">
+                        <label for="date_of_birth" class="form-label">Date Of Birth</label>
+                        <input class="form-control required" type="date" id="date_of_birth" name="date_of_birth" required="" placeholder="Enter your date of birth">
+                    </div>
+                    <div class="mb-3">
+                        <label for="nationality" class="form-label">Nationality</label>
+                        <input class="form-control required" type="text" id="nationality" name="nationality" required="" placeholder="Enter your nationality">
+                    </div>
+                    <div class="mb-3 col-md-12">
+                        <label for="gender" class="form-label">Gender</label>
+                        <select id="gender" name="gender" class="form-select required">
+                            <option value="">Please Select</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                        </select>
+                    </div>
+                    <div class="mb-3 col-md-12">
+                        <label for="marital_status" class="form-label">Marital Status</label>
+                        <select id="marital_status" name="marital_status" class="form-select required">
+                            <option value="">Please Select</option>
+                            <option value="Single">Single</option>
+                            <option value="Married">Married</option>
+                        </select>
+                    </div>
+                    <div class="mb-3 col-md-12">
+                        <label for="education_level" class="form-label">Education Level</label>
+                        <select id="education_level" name="education_level" class="form-select required">
+                            <option value="">Please Select</option>
+                            <option value="Bachelor's Degree">Bachelor's Degree</option>
+                            <option value="Master's Degree">Master's Degree</option>
+                            <option value="Doctorate Degree">Doctorate Degree</option>
+                        </select>
+                    </div>
+                    <div class="mb-3 col-md-12">
+                        <label for="language_proficiency" class="form-label">Language Proficiency</label>
+                        <select id="language_proficiency" name="language_proficiency" class="form-select required">
+                            <option value="">Please Select</option>
+                            <option value="Beginner">Beginner</option>
+                            <option value="Intermediate">Intermediate</option>
+                            <option value="Advanced">Advanced</option>
+                            <option value="Fluent">Fluent</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="years_of_experience" class="form-label">Years Of Work Experience</label>
+                        <input class="form-control required" type="number" id="years_of_experience" name="years_of_experience" required="" placeholder="Enter years of work experience">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </form>
+            </div>
+        </div>
+    </div>
+</div>

@@ -31,8 +31,8 @@ $(function () {
                 {
                     /*alert(fields[i].id)*/
                     unblockUI();
-                    //showSimpleMessage("Attention", `${fields[i].name} is required`, "error");
-                    alert(`${fields[i].name} is required`)
+                    showSimpleMessage("Attention", `${fields[i].name} is required`, "error");
+                    //alert(`${fields[i].name} is required`)
                     $('#'+fields[i].id).focus();
                     return false;
                 }
@@ -41,8 +41,8 @@ $(function () {
             if(!validateEmail(email))
             {
                 //alert("All fields are required");
-               //showSimpleMessage("Attention", "Please provide a valid email address", "error");
-               alert("Please provide a valid email address")
+               showSimpleMessage("Attention", "Please provide a valid email address", "error");
+               //alert("Please provide a valid email address")
                unblockUI();
                return false;
             }
@@ -57,8 +57,6 @@ $(function () {
                     success: function(response)
                     {
                         var token = response.token; //generated access token from request
-                        //var role = payloadClaim(token, "user_role"); //the user section from access token
-                        //var redirectTo = role === 'Admin' ? '/admin/dashboard' : role === "Voter" ? '/voter/dashboard' : '/observer';
                         var redirectTo = '/dashboard';
 
                         setRememberMe(); //store login details to hardrive if any
@@ -69,7 +67,7 @@ $(function () {
                     },
                     error: function(req, status, err)
                     {
-                        //showSimpleMessage("Attention", "ERROR - "+req.status+" : "+req.responseText, "error");
+                        showSimpleMessage("Attention", req.responseJSON.message, "error");
                         alert(req.responseJSON.message);
                         unblockUI();
                     }
@@ -97,8 +95,8 @@ $(function () {
                     /*alert(fields[i].id)*/
                     unblockUI();
                     form.find('#'+fields[i].id).focus();
-                    //showSimpleMessage("Attention", `${fields[i].name} is required`, "error");
-                    alert(`${fields[i].name} is required`)
+                    showSimpleMessage("Attention", `${fields[i].name} is required`, "error");
+                    //alert(`${fields[i].name} is required`)
                     return false;
                 }
             }
@@ -107,16 +105,16 @@ $(function () {
             {
                 //alert("All fields are required");
                 unblockUI();
-                //showSimpleMessage("Attention", "Please provide a valid email address", "error");
-                alert("Please provide a valid email address")
+                showSimpleMessage("Attention", "Please provide a valid email address", "error");
+                //alert("Please provide a valid email address")
                 return false;
             }
             
             if(password !== repassword)
             {
                 unblockUI();
-                //showSimpleMessage("Attention", "Passwords don't match", "error");
-                alert("Passwords don't match")
+                showSimpleMessage("Attention", "Passwords don't match", "error");
+                //alert("Passwords don't match")
                 return false;
             } 
             
@@ -129,14 +127,15 @@ $(function () {
                 success: function(response)
                 {
                     unblockUI();
-                    alert(response.message);
+                    //alert(response.message);
+                    showSimpleMessage("Success", response.message, "success");
                     form.get(0).reset();
                     window.location = `/account-verification?email=${email}`;
                 },
                 error: function(req, status, err)
                 {
-                    //showSimpleMessage("Attention", "ERROR - "+req.status+" : "+req.responseText, "error");
-                    alert(req.responseJSON.message)
+                    showSimpleMessage("Attention", req.responseJSON.message, "error");
+                    //alert(req.responseJSON.message)
                     unblockUI();
                 }
             });
@@ -194,8 +193,8 @@ $(function () {
                 {
                     /*alert(fields[i].id)*/
                     unblockUI();
-                    //showSimpleMessage("Attention", `${fields[i].name} is required`, "error");
-                    alert(`${fields[i].name} is required`)
+                    showSimpleMessage("Attention", `${fields[i].name} is required`, "error");
+                    //alert(`${fields[i].name} is required`)
                     $('#'+fields[i].id).focus();
                     return false;
                 }
@@ -204,8 +203,8 @@ $(function () {
             if(!validateEmail(email))
             {
                 //alert("All fields are required");
-               //showSimpleMessage("Attention", "Please provide a valid email address", "error");
-               alert("Please provide a valid email address")
+               showSimpleMessage("Attention", "Please provide a valid email address", "error");
+               //alert("Please provide a valid email address")
                unblockUI();
                return false;
             }
@@ -221,12 +220,13 @@ $(function () {
                     {
                         unblockUI();
                         form.get(0).reset();
-                        alert(response.message)
+                        //alert(response.message)
+                        showSimpleMessage("Success", response.message, "success");
                     },
                     error: function(req, status, err)
                     {
-                        //showSimpleMessage("Attention", "ERROR - "+req.status+" : "+req.responseText, "error");
-                        alert(req.responseJSON.message);
+                        showSimpleMessage("Attention", req.responseJSON.message, "error");
+                        //alert(req.responseJSON.message);
                         unblockUI();
                     }
                 });

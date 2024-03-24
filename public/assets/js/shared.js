@@ -24,8 +24,8 @@ $(function () {
                 {
                     /*alert(fields[i].id)*/
                     unblockUI();
-                    //showSimpleMessage("Attention", `${fields[i].name} is required`, "error");
-                    alert(`${fields[i].name} is required`)
+                    showSimpleMessage("Attention", `${fields[i].name} is required`, "error");
+                    //alert(`${fields[i].name} is required`)
                     $('#'+fields[i].id).focus();
                     return false;
                 }
@@ -51,8 +51,8 @@ $(function () {
                 },
                 error: function(req, status, err)
                 {
-                    //showSimpleMessage("Attention", "ERROR - "+req.status+" : "+req.responseText, "error");
-                    alert(req.responseJSON.message);
+                    showSimpleMessage("Attention", req.responseJSON.message, "error");
+                    //alert(req.responseJSON.message);
                     unblockUI();
                 }
             });

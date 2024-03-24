@@ -40,8 +40,8 @@ $(function () {
                 {
                     /*alert(fields[i].id)*/
                     unblockUI();
-                    //showSimpleMessage("Attention", `${fields[i].name} is required`, "error");
-                    alert(`${fields[i].name} is required`)
+                    showSimpleMessage("Attention", `${fields[i].name} is required`, "error");
+                    //alert(`${fields[i].name} is required`)
                     $('#'+fields[i].id).focus();
                     return false;
                 }
@@ -50,7 +50,8 @@ $(function () {
             if(password !== repassword)
             {
                 unblockUI();
-                alert('passwords dont match');
+                showSimpleMessage("Attention", "Passwords don't match", "error");
+                //alert('passwords dont match');
                 return false;
             }
 
@@ -65,12 +66,14 @@ $(function () {
                 success: function(response)
                 {
                     unblockUI();
-                    alert(response.message);
+                    //alert(response.message);
+                    showSimpleMessage("Success", response.message, "success");
                     window.location = `/sign-in`;
                 },
                 error: function(req, status, err)
                 {
-                    alert(req.responseJSON.message);
+                    //alert(req.responseJSON.message);
+                    showSimpleMessage("Attention", req.responseJSON.message, "error");
                     form.get(0).reset();
                     unblockUI();
                 }

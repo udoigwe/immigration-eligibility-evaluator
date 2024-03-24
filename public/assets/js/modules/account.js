@@ -26,8 +26,8 @@ $(function () {
                 {
                     /*alert(fields[i].id)*/
                     unblockUI();
-                    //showSimpleMessage("Attention", `${fields[i].name} is required`, "error");
-                    alert(`${fields[i].name} is required`)
+                    showSimpleMessage("Attention", `${fields[i].name} is required`, "error");
+                    //alert(`${fields[i].name} is required`)
                     $('#'+fields[i].id).focus();
                     return false;
                 }
@@ -35,7 +35,8 @@ $(function () {
             
             if(confirmPass !== newPass)
             {
-               alert("Passwords do not match")
+               //alert("Passwords do not match")
+               showSimpleMessage("Attention", "Passwords don't match", "error");
                unblockUI();
                return false;
             }
@@ -50,12 +51,14 @@ $(function () {
                 success: function(response)
                 {
                     form.get(0).reset();
-                    alert(response.message);
+                    //alert(response.message);
+                    showSimpleMessage("Success", response.message, "success");
                     unblockUI();
                 },
                 error: function(req, status, err)
                 {
-                    alert(req.responseJSON.message);
+                    //alert(req.responseJSON.message);
+                    showSimpleMessage("Attention", req.responseJSON.message, "error");
                     unblockUI();
                 }
             });

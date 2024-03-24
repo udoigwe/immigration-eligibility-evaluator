@@ -42,12 +42,14 @@ $(function () {
                 success: function(response)
                 {
                     unblockUI();
-                    alert(response.message);
+                    //alert(response.message);
+                    showSimpleMessage("Success", response.message, "success");
                     window.location = `/sign-in`;
                 },
                 error: function(req, status, err)
                 {
-                    alert(req.responseJSON.message);
+                    //alert(req.responseJSON.message);
+                    showSimpleMessage("Attention", req.responseJSON.message, "error");
                     form.get(0).reset();
                     unblockUI();
                 }
@@ -72,11 +74,13 @@ $(function () {
                 success: function(response)
                 {
                     unblockUI();
-                    alert(response.message);
+                    //alert(response.message);
+                    showSimpleMessage("Success", response.message, "success");
                 },
                 error: function(req, status, err)
                 {
-                    alert(req.responseJSON.message);
+                    //alert(req.responseJSON.message);
+                    showSimpleMessage("Attention", req.responseJSON.message, "error");
                     unblockUI();
                 }
             })

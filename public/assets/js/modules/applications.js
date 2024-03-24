@@ -237,9 +237,9 @@ $(function () {
                 {
                     /*alert(fields[i].id)*/
                     unblockUI();
-                    //showSimpleMessage("Attention", `${fields[i].name} is required`, "error");
+                    showSimpleMessage("Attention", `${fields[i].name} is required`, "error");
                     //alert(`${fields[i].name} is required`)
-                    alert('All fields are required');
+                    //alert('All fields are required');
                     $('#'+fields[i].id).focus();
                     return false;
                 }
@@ -269,7 +269,6 @@ $(function () {
                         html += `
                             <div class="card card-body" style="margin-bottom: 20px; text-transform: uppercase; background-color: #F0F0F0">
                                 <h3 class="card-title mx-auto text-center">${suitableCountry.country}</h1>
-                                <h5 class="card-text date_of_birth mx-auto text-center">Score: ${suitableCountry.score}</h4>
                             </div>
                         `
                     }
@@ -283,8 +282,8 @@ $(function () {
                 },
                 error: function(req, status, err)
                 {
-                    console.log(req)
-                    alert(req.responseJSON.message);
+                    const message = req.status === 400 ? req.responseJSON.message + `<br>Please click <a href='/dashboard'>here to get started</a>` : req.responseJSON.message;
+                    showSimpleHTMLMessage("Attention", message, "error");
                     unblockUI();
                 }
             });

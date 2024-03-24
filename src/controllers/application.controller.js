@@ -194,7 +194,7 @@ module.exports = {
 
             if(profiles.length === 0)
             {
-                throw new CustomError(404, "You must complete your profile before accessing this feature");
+                throw new CustomError(400, "You must complete your profile before accessing this feature");
             }
 
             if(loggedUser.profile_completion_status === "Uncompleted")

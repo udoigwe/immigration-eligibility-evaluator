@@ -90,13 +90,41 @@ function validateEmail(email)
 
 //Show simple message
 function showSimpleMessage(title, text, type) {
-    swal({
+    Swal.fire({
         title: title,
         text: text,
-        type: type,
+        icon: type,
         confirmButtonText: "Close",
         showLoaderOnConfirm: false,
     });
+}
+
+//Show simple html message
+function showSimpleHTMLMessage(title, html, type) {
+    Swal.fire({
+        title: title,
+        html: html,
+        icon: type,
+        confirmButtonText: "Close",
+        showLoaderOnConfirm: false,
+    });
+}
+
+async function showConfirmMessage(title, text, type, callback) {
+    const result = await Swal.fire({
+        title: title,
+        text: text,
+        icon: type,
+        showCancelButton: true,
+        padding: '2em'
+        //closeOnConfirm: false,
+        //showLoaderOnConfirm: true,
+    });
+
+    if(result.value)
+    {
+        callback;
+    }
 }
 
 //not logged in check
@@ -150,31 +178,36 @@ function updateProfilePopUp()
     }
 }
 
-function signOut()
-{
+async function showSignOutMessage() {
     var token = sessionStorage.getItem('token'); //access token
     var firstname = payloadClaim(token, 'first_name');
 
-    const confirm = window.confirm(`Are you sure you want to sign ${firstname}?`);
+    const result = await Swal.fire({
+        title: "Sign Out?",
+        text: `Are you sure you want to sign ${firstname} out?`,
+        icon: "warning",
+        showCancelButton: true,
+        padding: '2em'
+        //closeOnConfirm: false,
+        //showLoaderOnConfirm: true,
+    });
 
-    // Check the result of the confirmation
-    if (confirm) {
-        
-
-        blockUI();
-
-        //clear all stored sessions
-        sessionStorage.clear();
-                    
-        //redirect to login screeen
-        window.location = '/sign-in';
-    } 
-    else 
+    if(result.value)
     {
-        alert("Please continue");
-        // Perform the action you want to execute when the user clicks Cancel or closes the dialog
-    }       
+        signOut();
+    }
 }
+
+function signOut()
+{
+    blockUI();
+
+    //clear all stored sessions
+    sessionStorage.clear();
+                
+    //redirect to login screeen
+    window.location = '/sign-in';
+} 
 
 function formatNumber(num) {
     return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')

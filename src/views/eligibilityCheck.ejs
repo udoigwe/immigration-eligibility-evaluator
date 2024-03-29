@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <%- include('./partials/head') %>
+    </head>
+    <body onload="isAuthenticated(); displayProfile();" class="loading" data-layout-color="light"  data-layout-mode="default" data-layout-size="fluid" data-topbar-color="light" data-leftbar-position="fixed" data-leftbar-color="light" data-leftbar-size='default' data-sidebar-user='true'>
+        <!-- Begin page -->
+        <div id="wrapper">
+            <%- include('./partials/topBar') %>
+            
+            <%- include('./partials/sideBar') %>
+
+            <div class="content-page">
+                <div class="content">
+
+                    <!-- Start Content-->
+                    <div class="container-fluid">
+
+                        <!-- Form row -->
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h4 class="header-title">Start Your Immigration Eligibility Evaluations</h4>
+                                        <p class="text-muted font-13">
+                                            Answer questions below to evaluate your immigration eligibility in the country selected.
+                                        </p>
+
+                                        <form id="evaluator">
+                                            <div class="row">
+                                                <div class="mb-3 col-md-6">
+                                                    <label for="CountryCode" class="form-label">Country Of Choice</label>
+                                                    <select id="CountryCode" name="CountryCode" class="form-select required"></select>
+                                                </div>
+                                                <div class="mb-3 col-md-6">
+                                                    <label for="VisaCategoryID" class="form-label">Visa Type</label>
+                                                    <select id="VisaCategoryID" name="VisaCategoryID" class="form-select required"></select>
+                                                </div>
+                                            </div>
+
+                                            <div class="row criteria-list"></div>
+
+                                            <button type="submit" class="btn btn-primary waves-effect waves-light">
+                                                Evaluate
+                                            </button>
+
+                                        </form>
+
+                                    </div> <!-- end card-body -->
+                                </div> <!-- end card-->
+                            </div> <!-- end col -->
+                        </div>
+                        <!-- end row -->
+                        
+                    </div> <!-- container -->
+
+                </div> <!-- content -->
+
+                <!-- Footer Start -->
+                <footer class="footer">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <script>document.write(new Date().getFullYear())</script> &copy; Immigration Eligibility Evaluator
+                            </div>
+                            <div class="col-md-6">
+                                <div class="text-md-end footer-links d-none d-sm-block">
+                                    <a href="javascript:void(0);">About Us</a>
+                                    <a href="javascript:void(0);">Help</a>
+                                    <a href="javascript:void(0);">Contact Us</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </footer>
+                <!-- end Footer -->
+
+            </div>
+
+            <!-- ============================================================== -->
+            <!-- End Page content -->
+            <!-- ============================================================== -->
+        </div>
+        <!-- END wrapper -->
+
+        <%- include('./partials/scripts') %>
+        <script src="/assets/js/modules/eligibilityCheck.js"></script>
+    </body>
+</html>

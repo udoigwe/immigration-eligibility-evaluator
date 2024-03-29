@@ -14,6 +14,7 @@ module.exports = {
     profileUpdate: validate(authValidations.profileUpdate),
 
     /* Applications route validators */
-    apply: validate(applicationValidations.apply),
-    findSuitableCountries: validate(applicationValidations.findSuitableCountries)
+    evaluate: validate(applicationValidations.evaluate),
+    findSuitableCountries: validate(applicationValidations.findSuitableCountries),
+    getCountryVisaCriteria: validate(applicationValidations.getCountryVisaCriteria)
 }

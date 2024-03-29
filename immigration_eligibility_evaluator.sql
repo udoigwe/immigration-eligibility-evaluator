@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 22, 2024 at 06:39 AM
+-- Generation Time: Mar 29, 2024 at 03:06 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -317,7 +317,11 @@ INSERT INTO `countrycriteria` (`CountryCriterionID`, `CountryCode`, `VisaCriteri
 (251, 'GER', 11, 2, '€0 - €25,000'),
 (252, 'GER', 11, 5, '€25,001 - €50,000'),
 (253, 'GER', 11, 7, '€50,001 - €100,000'),
-(254, 'GER', 11, 10, '€100,001 and above');
+(254, 'GER', 11, 10, '€100,001 and above'),
+(255, 'USA', 6, 20, 'Scored 8 and above'),
+(256, 'USA', 6, 15, 'Scored 7'),
+(257, 'USA', 6, 10, 'Scored 6'),
+(258, 'USA', 6, 0, 'Scored 5 or below');
 
 -- --------------------------------------------------------
 
@@ -385,6 +389,31 @@ INSERT INTO `eligibilitythreshold` (`ThresholdID`, `CountryCode`, `VisaCategoryI
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `evaluations`
+--
+
+CREATE TABLE `evaluations` (
+  `EvaluationID` int(11) NOT NULL,
+  `UserID` int(11) NOT NULL,
+  `ChoiceCountryCode` varchar(10) NOT NULL,
+  `ChoiceVisaCategoryID` int(11) NOT NULL,
+  `CreatedAt` datetime NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `evaluations`
+--
+
+INSERT INTO `evaluations` (`EvaluationID`, `UserID`, `ChoiceCountryCode`, `ChoiceVisaCategoryID`, `CreatedAt`) VALUES
+(1, 7, 'CAN', 1, '2024-03-29 14:49:10'),
+(2, 7, 'CAN', 1, '2024-03-29 14:52:07'),
+(3, 7, 'USA', 1, '2024-03-29 15:03:16'),
+(4, 7, 'USA', 1, '2024-03-29 15:03:37'),
+(5, 7, 'USA', 1, '2024-03-29 15:04:00');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `personalinformation`
 --
 
@@ -408,8 +437,8 @@ INSERT INTO `personalinformation` (`personal_info_id`, `user_id`, `gender`, `dat
 (1, 1, 'Male', '1988-07-15', 'Nigeria', 'Single', 'Master\'s Degree', 8, 'Fluent'),
 (2, 2, 'Female', '1990-10-22', 'India', 'Married', 'Bachelor\'s Degree', 5, 'Fluent'),
 (3, 3, 'Male', '1992-03-05', 'China', 'Single', 'Doctorate Degree', 3, 'Intermediate'),
-(4, 6, 'Male', '2024-03-01', 'Nigeria', 'Single', 'Master\'s Degree', 9, 'Intermediate'),
-(5, 5, 'Female', '2024-03-01', 'Nigeria', 'Single', 'Master\'s Degree', 5, 'Intermediate');
+(4, 6, 'Male', '1978-03-01', 'Nigeria', 'Single', 'Masters Degree', 9, 'Intermediate'),
+(8, 7, 'Female', '1986-12-24', 'Venezuela', 'Married', 'Doctorate Degree', 8, 'Intermediate');
 
 -- --------------------------------------------------------
 
@@ -438,8 +467,9 @@ INSERT INTO `users` (`userID`, `first_name`, `last_name`, `password`, `email`, `
 (1, 'Chinedu', 'Okonkwo', 'chinedusPass123', 'chinedu.okonkwo@example.com', NULL, NULL, NULL, 'Uncompleted', 'Inactive'),
 (2, 'Priya', 'Kumar', 'priyasPass456', 'priya.kumar@example.com', NULL, NULL, NULL, 'Uncompleted', 'Inactive'),
 (3, 'Li', 'Wei', 'lisPass789', 'li.wei@example.com', NULL, NULL, NULL, 'Uncompleted', 'Inactive'),
-(5, 'Sandra', 'Okeh', 'iee2024', 'cisay17193@irnini.com', NULL, NULL, '1711013872', 'Completed', 'Active'),
-(6, 'Uchechukwu', 'Udo', 'iee2024', 'udoigweuchechukwu@gmail.com', NULL, NULL, '1711021338', 'Completed', 'Active');
+(5, 'Sandra', 'Okeh', 'iee2024', 'cisay17193@irnini.com', NULL, NULL, '1711013872', 'Uncompleted', 'Active'),
+(6, 'Uchechukwu', 'Udo', 'iee2024', 'udoigweuchechukwu@gmail.com', NULL, NULL, '1711021338', 'Completed', 'Active'),
+(7, 'Cojo', 'Nemanja', 'iee2024', 'cojoge6372@storesr.com', NULL, NULL, '1711256414', 'Completed', 'Active');
 
 -- --------------------------------------------------------
 
@@ -471,6 +501,55 @@ INSERT INTO `userselection` (`SubmissionID`, `CountryCriterionID`, `UserID`, `Da
 (2, 138, 2, '2024-03-20 21:00:00'),
 (2, 143, 2, '2024-03-20 21:00:00'),
 (2, 145, 2, '2024-03-20 21:00:00');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `usersubmissions`
+--
+
+CREATE TABLE `usersubmissions` (
+  `SubmissionID` int(11) NOT NULL,
+  `EvaluationID` int(11) NOT NULL,
+  `CountryCriterionID` int(11) NOT NULL,
+  `Score` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `usersubmissions`
+--
+
+INSERT INTO `usersubmissions` (`SubmissionID`, `EvaluationID`, `CountryCriterionID`, `Score`) VALUES
+(1, 1, 107, 10),
+(2, 1, 112, 10),
+(3, 1, 115, 4),
+(4, 1, 119, 6),
+(5, 1, 122, 0),
+(6, 1, 124, 20),
+(7, 2, 107, 10),
+(8, 2, 114, 6),
+(9, 2, 117, 8),
+(10, 2, 120, 8),
+(11, 2, 123, 12),
+(12, 2, 124, 20),
+(13, 3, 2, 8),
+(14, 3, 6, 10),
+(15, 3, 10, 6),
+(16, 3, 14, 8),
+(17, 3, 16, 0),
+(18, 3, 258, 0),
+(19, 4, 1, 10),
+(20, 4, 7, 8),
+(21, 4, 10, 6),
+(22, 4, 13, 6),
+(23, 4, 16, 0),
+(24, 4, 255, 20),
+(25, 5, 1, 10),
+(26, 5, 7, 8),
+(27, 5, 10, 6),
+(28, 5, 14, 8),
+(29, 5, 17, 12),
+(30, 5, 255, 20);
 
 -- --------------------------------------------------------
 
@@ -559,6 +638,15 @@ ALTER TABLE `eligibilitythreshold`
   ADD KEY `VisaCategoryID` (`VisaCategoryID`);
 
 --
+-- Indexes for table `evaluations`
+--
+ALTER TABLE `evaluations`
+  ADD PRIMARY KEY (`EvaluationID`),
+  ADD KEY `UserID` (`UserID`),
+  ADD KEY `ChoiceCountryCode` (`ChoiceCountryCode`),
+  ADD KEY `ChoiceVisaCategoryID` (`ChoiceVisaCategoryID`);
+
+--
 -- Indexes for table `personalinformation`
 --
 ALTER TABLE `personalinformation`
@@ -579,6 +667,14 @@ ALTER TABLE `userselection`
   ADD PRIMARY KEY (`SubmissionID`,`CountryCriterionID`),
   ADD KEY `CountryCriterionID` (`CountryCriterionID`),
   ADD KEY `UserID` (`UserID`);
+
+--
+-- Indexes for table `usersubmissions`
+--
+ALTER TABLE `usersubmissions`
+  ADD PRIMARY KEY (`SubmissionID`),
+  ADD KEY `EvaluationID` (`EvaluationID`),
+  ADD KEY `CountryCriterionID` (`CountryCriterionID`);
 
 --
 -- Indexes for table `visacategories`
@@ -603,7 +699,7 @@ ALTER TABLE `visacriteria`
 -- AUTO_INCREMENT for table `countrycriteria`
 --
 ALTER TABLE `countrycriteria`
-  MODIFY `CountryCriterionID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=255;
+  MODIFY `CountryCriterionID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=263;
 
 --
 -- AUTO_INCREMENT for table `criteria`
@@ -618,16 +714,28 @@ ALTER TABLE `eligibilitythreshold`
   MODIFY `ThresholdID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
+-- AUTO_INCREMENT for table `evaluations`
+--
+ALTER TABLE `evaluations`
+  MODIFY `EvaluationID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
 -- AUTO_INCREMENT for table `personalinformation`
 --
 ALTER TABLE `personalinformation`
-  MODIFY `personal_info_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `personal_info_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `userID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `userID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- AUTO_INCREMENT for table `usersubmissions`
+--
+ALTER TABLE `usersubmissions`
+  MODIFY `SubmissionID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- AUTO_INCREMENT for table `visacategories`
@@ -660,6 +768,14 @@ ALTER TABLE `eligibilitythreshold`
   ADD CONSTRAINT `eligibilitythreshold_ibfk_2` FOREIGN KEY (`VisaCategoryID`) REFERENCES `visacategories` (`VisaCategoryID`) ON DELETE CASCADE;
 
 --
+-- Constraints for table `evaluations`
+--
+ALTER TABLE `evaluations`
+  ADD CONSTRAINT `evaluations_ibfk_1` FOREIGN KEY (`ChoiceCountryCode`) REFERENCES `countries` (`CountryCode`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `evaluations_ibfk_2` FOREIGN KEY (`ChoiceVisaCategoryID`) REFERENCES `visacategories` (`VisaCategoryID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `evaluations_ibfk_3` FOREIGN KEY (`UserID`) REFERENCES `users` (`userID`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
 -- Constraints for table `personalinformation`
 --
 ALTER TABLE `personalinformation`
@@ -671,6 +787,13 @@ ALTER TABLE `personalinformation`
 ALTER TABLE `userselection`
   ADD CONSTRAINT `userselection_ibfk_1` FOREIGN KEY (`CountryCriterionID`) REFERENCES `countrycriteria` (`CountryCriterionID`) ON DELETE CASCADE,
   ADD CONSTRAINT `userselection_ibfk_2` FOREIGN KEY (`UserID`) REFERENCES `users` (`userID`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `usersubmissions`
+--
+ALTER TABLE `usersubmissions`
+  ADD CONSTRAINT `usersubmissions_ibfk_1` FOREIGN KEY (`CountryCriterionID`) REFERENCES `countrycriteria` (`CountryCriterionID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `usersubmissions_ibfk_2` FOREIGN KEY (`EvaluationID`) REFERENCES `evaluations` (`EvaluationID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `visacriteria`

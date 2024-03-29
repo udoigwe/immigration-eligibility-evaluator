@@ -14,5 +14,6 @@ router.get('/dashboard', viewsController.dashboard);
 router.get('/applications', viewsController.applications);
 router.get('/suitable-countries', viewsController.findSuitableCountries);
 router.get('/account', viewsController.account);
+router.get('/eligibility-check', viewsController.eligibilityCheck);
 
 module.exports = router;

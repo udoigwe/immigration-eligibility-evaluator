@@ -31,4 +31,7 @@ module.exports = {
     account: async (req, res) => {
         res.render('account', { title:'My Account', page_title: 'My Account'})
     },
+    eligibilityCheck: async (req, res) => {
+        res.render('eligibilityCheck', { title: 'Eligibility Checker', page_title: 'Eligibility Checker' });
+    }
 }

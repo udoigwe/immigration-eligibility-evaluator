@@ -67,7 +67,7 @@ components:
         gender: Male
         password: iee2024
         nationality: 10
-        dob: '1987-10-10'
+        dob: "1987-10-10"
     loginDTO:
       type: object
       required:
@@ -211,7 +211,7 @@ components:
           type: string
         dob:
           type: string
-        gender: 
+        gender:
           type: string
         email:
           type: string
@@ -224,17 +224,9 @@ components:
     countryResponse:
       type: object
       properties:
-        country_id:
-          type: integer
-        country_code:
+        CountryCode:
           type: string
-        country_name:
-          type: string
-        min_score:
-          type: integer
-        max_score:
-          type: integer
-        country_status:
+        CountryName:
           type: string
     immigrationTypeResponse:
       type: object
@@ -261,7 +253,7 @@ components:
         options:
           type: array
           items:
-            $ref: '#/components/schemas/criteriaOptionsResponse'
+            $ref: "#/components/schemas/criteriaOptionsResponse"
     criteriaOptionsResponse:
       type: object
       properties:
@@ -280,10 +272,10 @@ components:
       properties:
         error:
           type: boolean
-          $ref: '#/components/schemas/error'
+          $ref: "#/components/schemas/error"
         user:
           type: object
-          $ref: '#/components/schemas/userResponse'
+          $ref: "#/components/schemas/userResponse"
         token:
           type: string
           format: jwt
@@ -294,53 +286,53 @@ components:
       properties:
         error:
           type: boolean
-          $ref: '#/components/schemas/error'
+          $ref: "#/components/schemas/error"
         data:
           type: array
           items:
-            $ref: '#/components/schemas/countryResponse'
+            $ref: "#/components/schemas/countryResponse"
         paginationData:
           type: object
-          $ref: '#/components/schemas/paginationResponse'
+          $ref: "#/components/schemas/paginationResponse"
     allImmigrationTypeResponse:
       type: object
       properties:
         error:
           type: boolean
-          $ref: '#/components/schemas/error'
+          $ref: "#/components/schemas/error"
         data:
           type: array
           items:
-            $ref: '#/components/schemas/immigrationTypeResponse'
+            $ref: "#/components/schemas/immigrationTypeResponse"
         paginationData:
           type: object
-          $ref: '#/components/schemas/paginationResponse'
+          $ref: "#/components/schemas/paginationResponse"
     allCriteriaResponse:
       type: object
       properties:
         error:
           type: boolean
-          $ref: '#/components/schemas/error'
+          $ref: "#/components/schemas/error"
         data:
           type: array
           items:
-            $ref: '#/components/schemas/criteriaResponse'
+            $ref: "#/components/schemas/criteriaResponse"
         paginationData:
           type: object
-          $ref: '#/components/schemas/paginationResponse'
+          $ref: "#/components/schemas/paginationResponse"
     allCriteriaOptionsResponse:
       type: object
       properties:
         error:
           type: boolean
-          $ref: '#/components/schemas/error'
+          $ref: "#/components/schemas/error"
         data:
           type: array
           items:
-            $ref: '#/components/schemas/criteriaOptionsResponse'
+            $ref: "#/components/schemas/criteriaOptionsResponse"
         paginationData:
           type: object
-          $ref: '#/components/schemas/paginationResponse'
+          $ref: "#/components/schemas/paginationResponse"
   securitySchemes:
     ApiKeyAuth:
       type: apiKey
@@ -356,26 +348,26 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/signUpDTO'
+              $ref: "#/components/schemas/signUpDTO"
       responses:
         200:
           description: Sign Up Completed.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/messageResponse'
+                $ref: "#/components/schemas/messageResponse"
         400:
           description: An error occured
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/errorResponse'
+                $ref: "#/components/schemas/errorResponse"
         500:
           description: Some server error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/errorResponse'
+                $ref: "#/components/schemas/errorResponse"
   /login:
     post:
       summary: Login endpoint
@@ -385,26 +377,26 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/loginDTO'
+              $ref: "#/components/schemas/loginDTO"
       responses:
         200:
           description: Login successful.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/loginResponseData'
+                $ref: "#/components/schemas/loginResponseData"
         400:
           description: An error occured
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/errorResponse'
+                $ref: "#/components/schemas/errorResponse"
         500:
           description: Some server error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/errorResponse'
+                $ref: "#/components/schemas/errorResponse"
   /resend-otp:
     post:
       summary: Resend OTP endpoint
@@ -414,26 +406,26 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/resendOTPDTO'
+              $ref: "#/components/schemas/resendOTPDTO"
       responses:
         200:
           description: OTP resent successfully.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/messageResponse'
+                $ref: "#/components/schemas/messageResponse"
         400:
           description: An error occured
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/errorResponse'
+                $ref: "#/components/schemas/errorResponse"
         500:
           description: Some server error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/errorResponse'
+                $ref: "#/components/schemas/errorResponse"
   /verify-account:
     post:
       summary: Account Verification endpoint
@@ -443,26 +435,26 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/verifyAccountDTO'
+              $ref: "#/components/schemas/verifyAccountDTO"
       responses:
         200:
           description: Account verified successfully.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/messageResponse'
+                $ref: "#/components/schemas/messageResponse"
         400:
           description: An error occured
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/errorResponse'
+                $ref: "#/components/schemas/errorResponse"
         500:
           description: Some server error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/errorResponse'
+                $ref: "#/components/schemas/errorResponse"
   /send-password-recovery-mail:
     post:
       summary: Send Password Recovery Mail endpoint
@@ -472,26 +464,26 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/sendPasswordRecoveryMailDTO'
+              $ref: "#/components/schemas/sendPasswordRecoveryMailDTO"
       responses:
         200:
           description: Recover email sent successfully.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/messageResponse'
+                $ref: "#/components/schemas/messageResponse"
         400:
           description: An error occured
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/errorResponse'
+                $ref: "#/components/schemas/errorResponse"
         500:
           description: Some server error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/errorResponse'
+                $ref: "#/components/schemas/errorResponse"
   /change-password:
     post:
       summary: Change password endpoint
@@ -501,26 +493,26 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/changePasswordDTO'
+              $ref: "#/components/schemas/changePasswordDTO"
       responses:
         200:
           description: Password changed successfully.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/messageResponse'
+                $ref: "#/components/schemas/messageResponse"
         400:
           description: An error occured
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/errorResponse'
+                $ref: "#/components/schemas/errorResponse"
         500:
           description: Some server error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/errorResponse'
+                $ref: "#/components/schemas/errorResponse"
   /profile-update:
     post:
       summary: Update User Profile Endpoint
@@ -532,28 +524,28 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/profileUpdateDTO'
+              $ref: "#/components/schemas/profileUpdateDTO"
       responses:
         200:
           description: User Profile updated successfully.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/messageResponse'
+                $ref: "#/components/schemas/messageResponse"
         400:
           description: An error occured
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/errorResponse'
+                $ref: "#/components/schemas/errorResponse"
         500:
           description: Some server error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/errorResponse'
+                $ref: "#/components/schemas/errorResponse"
   /countries:
-    get: 
+    get:
       summary: Get All Countries
       tags: [Countries]
       parameters:
@@ -581,15 +573,15 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/allCountryResponse'
+                $ref: "#/components/schemas/allCountryResponse"
         500:
           description: Server error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/errorResponse'
+                $ref: "#/components/schemas/errorResponse"
   /immigration-types:
-    get: 
+    get:
       summary: Get All Immigration Types
       tags: [Immigration Types]
       parameters:
@@ -617,15 +609,15 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/allImmigrationTypeResponse'
+                $ref: "#/components/schemas/allImmigrationTypeResponse"
         500:
           description: Server error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/errorResponse'
+                $ref: "#/components/schemas/errorResponse"
   /criteria:
-    get: 
+    get:
       summary: Get All Criteria
       tags: [Criteria]
       parameters:
@@ -659,15 +651,15 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/allCriteriaResponse'
+                $ref: "#/components/schemas/allCriteriaResponse"
         500:
           description: Server error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/errorResponse'
+                $ref: "#/components/schemas/errorResponse"
   /criteria-options:
-    get: 
+    get:
       summary: Get All Criteria Options
       tags: [Criteria]
       parameters:
@@ -701,10 +693,10 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/allCriteriaOptionsResponse'
+                $ref: "#/components/schemas/allCriteriaOptionsResponse"
         500:
           description: Server error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/errorResponse'
+                $ref: "#/components/schemas/errorResponse"

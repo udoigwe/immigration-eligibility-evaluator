@@ -221,7 +221,7 @@ $(function () {
                 },
                 error: function(req, status, err)
                 {
-                    showSimpleMessage("Attention", req.responseJSON, "error");
+                    showSimpleMessage("Attention", req.responseJSON.message, "error");
                     unblockUI();
                 }
             });

@@ -140,7 +140,7 @@ module.exports = {
             connection ? connection.release() : null;
         }
     },
-    getCountryVisaCriteria: async (req, res, next) => {
+    /* getCountryVisaCriteria: async (req, res, next) => {
         const {
             country_code:CountryCode,
             visa_category_id:VisaCategoryID
@@ -202,6 +202,94 @@ module.exports = {
             res.json({
                 error: false,
                 criteria
+            })
+        }
+        catch(e)
+        {
+            next(e);
+        }
+        finally
+        {
+            connection ? connection.release() : null;
+        }
+    }, */
+    getCountryVisaCriteria: async (req, res, next) => {
+        const {
+            country_code:CountryCode,
+            visa_category_id:VisaCategoryID
+        } = req.params;
+
+        const Criteria = [];
+
+        let connection;
+
+        try
+        {
+            //instantiate db connection
+            connection = await pool.getConnection();
+
+            //fetch visa criteria by country code and visa category
+            const [ criteriaIDs] = await connection.execute(`
+                SELECT DISTINCT(CriterionID) AS criteria FROM 
+                (
+                    SELECT a.*, b.CriterionID, c.CriterionName, c.CriterionQuestion FROM countrycriteria a
+                    LEFT JOIN visacriteria b ON a.VisaCriteriaID = b.VisaCriteriaID
+                    LEFT JOIN criteria c ON b.CriterionID = c.CriterionID
+
+                    WHERE a.CountryCode = ? AND b.VisaCategoryID = ?
+                )X`,
+                [ CountryCode, VisaCategoryID  ]
+            );
+
+            //check if visa criteriaIDs exists for the Visa Category AND country code
+            if(criteriaIDs.length === 0)
+            {
+                throw new CustomError(404, "No visa criteria found for the selected visa category & country");
+            }
+
+            //get all visa category details for each returned criteriaID
+            for(let i = 0; i < criteriaIDs.length; i++)
+            {
+                const criterionID = criteriaIDs[i];
+
+                //fetch visa criterion details including question and name
+                const [ criteria ] = await connection.execute(`
+                    SELECT *
+                    FROM 
+                        criteria
+                    WHERE
+                        CriterionID = ?
+                    LIMIT 1`,
+                    [ criterionID.criteria ]
+                )
+
+                //check if criteria exists
+                if(criteria.length === 0)
+                {
+                    throw new CustomError(404, `Criterion with ID ${criterionID} does not exist`);
+                }
+
+                const criterion = criteria[0];
+
+                //fetch criterion options
+                const [ options] = await connection.execute(`
+                    SELECT a.*, b.CriterionID, c.CriterionName, c.CriterionQuestion FROM countrycriteria a
+                    LEFT JOIN visacriteria b ON a.VisaCriteriaID = b.VisaCriteriaID
+                    LEFT JOIN criteria c ON b.CriterionID = c.CriterionID
+
+                    WHERE b.CriterionID = ? AND a.CountryCode = ? AND b.VisaCategoryID = ?`,
+                    [ criterion.CriterionID, CountryCode, VisaCategoryID  ]
+                );
+
+                //attach country criteria options to criterion
+                criterion.options = options;
+                //dump this criterion into the central criteria
+                Criteria.push(criterion);
+            }
+
+            res.json({
+                error: false,
+                criteria:Criteria
             })
         }
         catch(e)

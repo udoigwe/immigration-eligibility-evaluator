@@ -32,6 +32,7 @@ app.set('views', './src/views');
 const authRoutes = require('./src/routes/auth');
 const resoucesRoutes = require('./src/routes/resources');
 const applicationRoutes = require('./src/routes/application');
+const postRoutes = require('./src/routes/post');
 const errorHandler = require('./src/middleware/errorHandler');
 
 //importing all view routes
@@ -45,6 +46,7 @@ const swaggerDocument = yaml.load(swaggerFile);
 app.use(process.env.ROUTE_PREFIX, authRoutes);
 app.use(process.env.ROUTE_PREFIX, resoucesRoutes);
 app.use(process.env.ROUTE_PREFIX, applicationRoutes);
+app.use(process.env.ROUTE_PREFIX, postRoutes);
 
 //using imported view routes
 app.use(viewRoutes);

@@ -143,7 +143,7 @@ module.exports = {
 
             else
             {
-                report += `Sorry!!! With a score of <b>${score}</b>, you do not qualify to immigrate to any of the underlisted countries. Please work on your profile and come back later.
+                report += `Sorry!!! With a score of <b>${score}</b>, you do not qualify to immigrate to <b>${threshold.CountryName}</b> or any of the available countries. Please work on your profile and come back later.
                 `
             }
 

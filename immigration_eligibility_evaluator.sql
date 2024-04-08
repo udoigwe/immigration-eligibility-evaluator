@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 29, 2024 at 03:06 PM
+-- Generation Time: Apr 08, 2024 at 07:58 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -409,7 +409,11 @@ INSERT INTO `evaluations` (`EvaluationID`, `UserID`, `ChoiceCountryCode`, `Choic
 (2, 7, 'CAN', 1, '2024-03-29 14:52:07'),
 (3, 7, 'USA', 1, '2024-03-29 15:03:16'),
 (4, 7, 'USA', 1, '2024-03-29 15:03:37'),
-(5, 7, 'USA', 1, '2024-03-29 15:04:00');
+(5, 7, 'USA', 1, '2024-03-29 15:04:00'),
+(6, 7, 'AUS', 1, '2024-03-31 23:44:22'),
+(7, 7, 'AUS', 1, '2024-03-31 23:45:56'),
+(8, 7, 'AUS', 2, '2024-04-05 23:20:41'),
+(9, 7, 'GER', 2, '2024-04-05 23:26:07');
 
 -- --------------------------------------------------------
 
@@ -439,6 +443,65 @@ INSERT INTO `personalinformation` (`personal_info_id`, `user_id`, `gender`, `dat
 (3, 3, 'Male', '1992-03-05', 'China', 'Single', 'Doctorate Degree', 3, 'Intermediate'),
 (4, 6, 'Male', '1978-03-01', 'Nigeria', 'Single', 'Masters Degree', 9, 'Intermediate'),
 (8, 7, 'Female', '1986-12-24', 'Venezuela', 'Married', 'Doctorate Degree', 8, 'Intermediate');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `posts`
+--
+
+CREATE TABLE `posts` (
+  `post_id` int(11) NOT NULL,
+  `author_id` int(11) NOT NULL,
+  `post` text NOT NULL,
+  `created_at` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `posts`
+--
+
+INSERT INTO `posts` (`post_id`, `author_id`, `post`, `created_at`) VALUES
+(1, 7, 'United States have started allowing applicants from Nigeria', '1712588324'),
+(2, 7, 'Who knows if Canada has start Asylum Visa?', '1712598125'),
+(3, 7, 'What happens if UAE bounces an application?', '1712598208');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `post_likes`
+--
+
+CREATE TABLE `post_likes` (
+  `post_like_id` int(11) NOT NULL,
+  `post_id` int(11) NOT NULL,
+  `liker_id` int(11) NOT NULL,
+  `created_at` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `post_replies`
+--
+
+CREATE TABLE `post_replies` (
+  `post_reply_id` int(11) NOT NULL,
+  `post_id` int(11) NOT NULL,
+  `author_id` int(11) NOT NULL,
+  `post_reply` text NOT NULL,
+  `created_at` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `post_replies`
+--
+
+INSERT INTO `post_replies` (`post_reply_id`, `post_id`, `author_id`, `post_reply`, `created_at`) VALUES
+(1, 1, 7, 'This is good to know', '1712597867'),
+(2, 2, 7, 'Yes they have', '1712598185'),
+(3, 3, 7, 'They will buy you Akara and bread to calm your nerves', '1712598231'),
+(4, 2, 7, 'It has not started', '1712598411');
 
 -- --------------------------------------------------------
 
@@ -549,7 +612,30 @@ INSERT INTO `usersubmissions` (`SubmissionID`, `EvaluationID`, `CountryCriterion
 (27, 5, 10, 6),
 (28, 5, 14, 8),
 (29, 5, 17, 12),
-(30, 5, 255, 20);
+(30, 5, 255, 20),
+(31, 6, 87, 8),
+(32, 6, 92, 8),
+(33, 6, 95, 6),
+(34, 6, 98, 6),
+(35, 6, 101, 0),
+(36, 6, 104, 15),
+(37, 7, 86, 10),
+(38, 7, 91, 10),
+(39, 7, 96, 8),
+(40, 7, 98, 6),
+(41, 7, 102, 12),
+(42, 7, 103, 20),
+(43, 8, 165, 20),
+(44, 8, 181, 7),
+(45, 8, 169, 6),
+(46, 8, 171, 10),
+(47, 8, 177, 15),
+(48, 8, 175, 6),
+(49, 9, 237, 20),
+(50, 9, 251, 2),
+(51, 9, 244, 12),
+(52, 9, 247, 6),
+(53, 9, 249, 15);
 
 -- --------------------------------------------------------
 
@@ -654,6 +740,29 @@ ALTER TABLE `personalinformation`
   ADD UNIQUE KEY `user_id` (`user_id`);
 
 --
+-- Indexes for table `posts`
+--
+ALTER TABLE `posts`
+  ADD PRIMARY KEY (`post_id`),
+  ADD KEY `author_id` (`author_id`);
+
+--
+-- Indexes for table `post_likes`
+--
+ALTER TABLE `post_likes`
+  ADD PRIMARY KEY (`post_like_id`),
+  ADD KEY `post_id` (`post_id`),
+  ADD KEY `liker_id` (`liker_id`);
+
+--
+-- Indexes for table `post_replies`
+--
+ALTER TABLE `post_replies`
+  ADD PRIMARY KEY (`post_reply_id`),
+  ADD KEY `post_id` (`post_id`),
+  ADD KEY `author_id` (`author_id`);
+
+--
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
@@ -717,13 +826,31 @@ ALTER TABLE `eligibilitythreshold`
 -- AUTO_INCREMENT for table `evaluations`
 --
 ALTER TABLE `evaluations`
-  MODIFY `EvaluationID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `EvaluationID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `personalinformation`
 --
 ALTER TABLE `personalinformation`
   MODIFY `personal_info_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
+-- AUTO_INCREMENT for table `posts`
+--
+ALTER TABLE `posts`
+  MODIFY `post_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `post_likes`
+--
+ALTER TABLE `post_likes`
+  MODIFY `post_like_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `post_replies`
+--
+ALTER TABLE `post_replies`
+  MODIFY `post_reply_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `users`
@@ -735,7 +862,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `usersubmissions`
 --
 ALTER TABLE `usersubmissions`
-  MODIFY `SubmissionID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `SubmissionID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
 
 --
 -- AUTO_INCREMENT for table `visacategories`
@@ -780,6 +907,26 @@ ALTER TABLE `evaluations`
 --
 ALTER TABLE `personalinformation`
   ADD CONSTRAINT `personalinformation_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`userID`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `posts`
+--
+ALTER TABLE `posts`
+  ADD CONSTRAINT `posts_ibfk_1` FOREIGN KEY (`author_id`) REFERENCES `users` (`userID`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `post_likes`
+--
+ALTER TABLE `post_likes`
+  ADD CONSTRAINT `post_likes_ibfk_1` FOREIGN KEY (`liker_id`) REFERENCES `users` (`userID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `post_likes_ibfk_2` FOREIGN KEY (`post_id`) REFERENCES `posts` (`post_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `post_replies`
+--
+ALTER TABLE `post_replies`
+  ADD CONSTRAINT `post_replies_ibfk_1` FOREIGN KEY (`author_id`) REFERENCES `users` (`userID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `post_replies_ibfk_2` FOREIGN KEY (`post_id`) REFERENCES `posts` (`post_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `userselection`

@@ -33,5 +33,8 @@ module.exports = {
     },
     eligibilityCheck: async (req, res) => {
         res.render('eligibilityCheck', { title: 'Eligibility Checker', page_title: 'Eligibility Checker' });
+    },
+    community: async (req, res) => {
+        res.render('community', { title: 'Community', page_title: 'Community' });
     }
 }

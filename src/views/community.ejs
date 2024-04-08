@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include('./partials/head') %>
+</head>
+
+<body onload="isAuthenticated(); displayProfile(); updateProfilePopUp();" class="loading" data-layout-color="light"
+    data-layout-mode="default" data-layout-size="fluid" data-topbar-color="light" data-leftbar-position="fixed"
+    data-leftbar-color="light" data-leftbar-size='default' data-sidebar-user='true'>
+    <!-- Begin page -->
+    <div id="wrapper">
+        <%- include('./partials/topBar') %>
+
+            <%- include('./partials/sideBar') %>
+
+                <div class="content-page">
+                    <div class="content">
+                    
+                        <!-- Start Content-->
+                        <div class="container-fluid">
+                    
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="card">
+                                        <form method="post" class="card-body" id="post-form">
+                                            <span class="input-icon icon-end">
+                                                <textarea rows="3" class="form-control required" id="post" name="post" placeholder="Whats on your mind?"></textarea>
+                                            </span>
+                                            <div class="pt-1 float-end">
+                                                <button type="submit" class="btn btn-primary btn-sm waves-effect waves-light">Send</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                    
+                                    <div class="card">
+                                        <div class="card-body posts">
+                                            <div class="d-flex align-items-top mb-2">
+                                                <img src="assets/images/users/user-1.jpg" alt=""
+                                                    class="flex-shrink-0 comment-avatar avatar-sm rounded me-2">
+                                                <div class="flex-grow-1">
+                                                    <h5 class="mt-0"><a href="#" class="text-dark">Adam Jansen</a><small
+                                                            class="ms-1 text-muted">about 2 minuts ago</small></h5>
+                                                    <p>Story based around the idea of time lapse, animation to post soon!</p>
+                                                    <div>
+                                                        <a href="#">
+                                                            <img src="assets/images/small/img-1.jpg" class="avatar-md rounded">
+                                                        </a>
+                                                        <a href="#">
+                                                            <img src="assets/images/small/img-2.jpg" class="avatar-md rounded">
+                                                        </a>
+                                                        <a href="#">
+                                                            <img src="assets/images/small/img-3.jpg" class="avatar-md rounded">
+                                                        </a>
+                                                    </div>
+                                                    <div class="comment-footer pt-2 mb-3">
+                                                        <a href="#"><i class="far fa-thumbs-up"></i></a>
+                                                        <a href="#"><i class="far fa-thumbs-down"></i></a>
+                                                        <a href="#">Reply</a>
+                                                    </div>
+                    
+                                                    <div class="d-flex align-items-top mb-2">
+                                                        <img src="assets/images/users/user-3.jpg" alt=""
+                                                            class="flex-shrink-0 comment-avatar avatar-sm rounded me-2">
+                                                        <div class="flex-grow-1">
+                                                            <h5 class="mt-0"><a href="#" class="text-dark">John Smith</a><small
+                                                                    class="ms-1 text-muted">about 1 hour ago</small></h5>
+                                                            <p>Wow impressive!</p>
+                    
+                                                            <div class="comment-footer">
+                                                                <a href="#"><i class="far fa-thumbs-up"></i></a>
+                                                                <a href="#"><i class="far fa-thumbs-down"></i></a>
+                                                                <a href="#">Reply</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="d-flex align-items-top">
+                                                        <img src="assets/images/users/user-4.jpg" alt=""
+                                                            class="flex-shrink-0 comment-avatar avatar-sm rounded me-2">
+                                                        <div class="flex-grow-1">
+                                                            <h5 class="mt-0"><a href="#" class="text-dark">Matt Cheuvront</a><small
+                                                                    class="ms-1 text-muted">about 2 hour ago</small></h5>
+                                                            <p>Wow, that is really nice.</p>
+                    
+                                                            <div class="comment-footer mb-3">
+                                                                <a href="#"><i class="far fa-thumbs-up"></i></a>
+                                                                <a href="#"><i class="far fa-thumbs-down"></i></a>
+                                                                <a href="#">Reply</a>
+                                                            </div>
+                    
+                                                            <div class="d-flex align-items-top mb-2">
+                                                                <img src="assets/images/users/user-5.jpg" alt=""
+                                                                    class="flex-shrink-0 comment-avatar avatar-sm rounded me-2">
+                                                                <div class="flex-grow-1">
+                                                                    <h5 class="mt-0"><a href="#" class="text-dark">Stephanie
+                                                                            Walter</a><small class="ms-1 text-muted">about 3 hour
+                                                                            ago</small></h5>
+                                                                    <p>Nice work, makes me think of The Money Pit.</p>
+                    
+                                                                    <div class="comment-footer">
+                                                                        <a href="#"><i class="far fa-thumbs-up"></i></a>
+                                                                        <a href="#"><i class="far fa-thumbs-down"></i></a>
+                                                                        <a href="#">Reply</a>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!--  media -->
+                    
+                                            <div class="d-flex align-items-top mb-3">
+                                                <img src="assets/images/users/user-6.jpg" alt=""
+                                                    class="flex-shrink-0 comment-avatar avatar-sm rounded me-2">
+                                                <div class="flex-grow-1">
+                                                    <h5 class="mt-0"><a href="#" class="text-dark">John Smith</a><small
+                                                            class="ms-1 text-muted">about 4 hour ago</small></h5>
+                                                    <p>i'm in the middle of a timelapse animation myself! (Very different though.) Awesome
+                                                        stuff.</p>
+                    
+                                                    <div class="comment-footer">
+                                                        <a href="#"><i class="far fa-thumbs-up"></i></a>
+                                                        <a href="#"><i class="far fa-thumbs-down"></i></a>
+                                                        <a href="#">Reply</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                    
+                                            <div class="d-flex align-items-top mb-3">
+                                                <img src="assets/images/users/user-7.jpg" alt=""
+                                                    class="flex-shrink-0 comment-avatar avatar-sm rounded me-2">
+                                                <div class="flex-grow-1">
+                                                    <h5 class="mt-0"><a href="#" class="text-dark">Nicolai Larson</a><small
+                                                            class="ms-1 text-muted">about 10 hour ago</small></h5>
+                                                    <p>The parallax is a little odd but O.o that house build is awesome!!</p>
+                    
+                                                    <div class="comment-footer">
+                                                        <a href="#"><i class="far fa-thumbs-up"></i></a>
+                                                        <a href="#"><i class="far fa-thumbs-down"></i></a>
+                                                        <a href="#">Reply</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                    
+                                            <!-- <div class="text-center">
+                                                <a href="#" class="text-danger"><i class="mdi mdi-spin mdi-loading me-1"></i> Load more </a>
+                                            </div> -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> <!-- container -->
+                    
+                    </div> <!-- content -->
+
+                    <!-- Footer Start -->
+                    <footer class="footer">
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <script>document.write(new Date().getFullYear())</script> &copy; Immigration
+                                    Eligibility Evaluator
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="text-md-end footer-links d-none d-sm-block">
+                                        <a href="javascript:void(0);">About Us</a>
+                                        <a href="javascript:void(0);">Help</a>
+                                        <a href="javascript:void(0);">Contact Us</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </footer>
+                    <!-- end Footer -->
+
+                </div>
+
+                <!-- Modal -->
+                <div class="modal fade" id="countryDisplay" data-bs-backdrop="static" data-bs-keyboard="false"
+                    tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="staticBackdropLabel">Available Suitable Countries</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div id="country-list"></div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                
+                <!-- Modal -->
+                <div class="modal fade" id="replyModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+                    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="staticBackdropLabel">Reply Post</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <form method="post" class="card-body" id="reply-form">
+                                    <span class="input-icon icon-end">
+                                        <textarea rows="3" class="form-control required" id="reply" name="reply" placeholder="Whats on your mind?"></textarea>
+                                        <input type="hidden" name="post_id" id="post_id" class="required" />
+                                    </span>                                
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-primary">Reply</button>
+                                </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- ============================================================== -->
+                <!-- End Page content -->
+                <!-- ============================================================== -->
+    </div>
+    <!-- END wrapper -->
+
+    <%- include('./partials/scripts') %>
+        <script src="/assets/js/modules/community.js"></script>
+</body>
+
+</html>

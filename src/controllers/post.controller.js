@@ -5,7 +5,8 @@ module.exports = {
     createPost: async (req, res, next) => {
         const loggedUser = req.userDecodedData;
         const {
-            post
+            post,
+            post_category_id
         } = req.body;
 
         const now = Math.floor(Date.now() / 1000);
@@ -24,13 +25,15 @@ module.exports = {
                     (
                         author_id,
                         post,
+                        post_category_id,
                         created_at
                     )
-                    VALUES (?, ?, ?)
+                    VALUES (?, ?, ?, ?)
                 `,
                 [
                     loggedUser.userID,
                     post,
+                    post_category_id,
                     now
                 ]
             );
@@ -51,7 +54,8 @@ module.exports = {
     },
     getPosts: async (req, res, next) => {
         const {
-            author_id
+            author_id,
+            post_category_id
         } = req.query;
 
         const page = req.query.page ? parseInt(req.query.page) : null;
@@ -85,6 +89,15 @@ module.exports = {
             
             query2 += ' AND X.author_id = ?';
             queryParams2.push(author_id);
+        }
+        
+        if(post_category_id)
+        {
+            query += ' AND a.post_category_id = ?';
+            queryParams.push(post_category_id);
+            
+            query2 += ' AND X.post_category_id = ?';
+            queryParams2.push(post_category_id);
         }
 
         query += ` ORDER BY a.post_id DESC`;
@@ -133,6 +146,77 @@ module.exports = {
                 post.replies = replies;
                 //post.likes = likes[0].total_likes;
             }
+
+            //total records
+            const totalRecords = parseInt(total[0].total_records);
+
+            // Calculate total pages if perPage is specified
+            const totalPages = perPage ? Math.ceil(totalRecords / perPage) : null;
+
+            // Calculate next and previous pages based on provided page and totalPages
+            const nextPage = page && totalPages && page < totalPages ? page + 1 : null;
+            const prevPage = page && page > 1 ? page - 1 : null;
+
+            res.json({
+                error: false,
+                data,
+                paginationData: {
+                    totalRecords,
+                    totalPages,
+                    currentPage: page,
+                    itemsPerPage: perPage,
+                    nextPage,
+                    prevPage
+                }
+            })
+        }
+        catch(e)
+        {
+            next(e)
+        }
+        finally
+        {
+            connection ? connection.release() : null;
+        }
+    },
+    getPostCategories: async (req, res, next) => {
+
+        const page = req.query.page ? parseInt(req.query.page) : null;
+        const perPage = req.query.perPage ? parseInt(req.query.perPage) : null;
+
+        let connection;
+
+        let query = `
+            SELECT * 
+            FROM post_categories
+            WHERE 1 = 1
+        `;
+        const queryParams = [];
+
+        let query2 = `
+            SELECT COUNT(*) AS total_records 
+            FROM post_categories
+            WHERE 1 = 1
+        `;
+        const queryParams2 = []
+
+        query += ` ORDER BY post_category ASC`;
+
+        if(page && perPage)
+        {
+            const offset = (page - 1) * perPage;
+            query += ` LIMIT ?, ?`;
+            queryParams.push(offset);
+            queryParams.push(perPage);
+        }
+
+        try
+        {
+            // Get a connection from the pool
+            connection = await pool.getConnection();
+
+            const [ data ] = await connection.execute(query, queryParams);
+            const [ total ] = await connection.execute(query2, queryParams2);
 
             //total records
             const totalRecords = parseInt(total[0].total_records);

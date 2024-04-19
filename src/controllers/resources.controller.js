@@ -300,5 +300,68 @@ module.exports = {
         {
             connection ? connection.release() : null;
         }
+    },
+    getImmigrationInsights: async (req, res, next) => {
+        const {
+            country_code,
+            visa_category_id,
+        } = req.params;
+
+        let connection;
+
+        try
+        {
+            //instantiate db connection
+            connection = await pool.getConnection();
+
+            //fetch immigration insights for the selected country & visa type
+            const [ insights] = await connection.execute(`
+                SELECT immigration_insight FROM immigration_insights WHERE country_code = ? AND visa_category_id = ? LIMIT 1`,
+                [ country_code, visa_category_id ]
+            );
+
+            //check if insights exists
+            if(insights.length === 0)
+            {
+                throw new CustomError(404, "No records found");
+            }
+
+            res.json({
+                error: false,
+                insights:insights[0].immigration_insight
+            })
+        }
+        catch(e)
+        {
+            next(e);
+        }
+        finally
+        {
+            connection ? connection.release() : null;
+        }
+    },
+    getCountryVisaComparisom: async (req, res, next) => {
+        const {
+            country_one,
+            country_two,
+            visa_category_id
+        } = req.body;
+
+        const countryArray = [ country_one, country_two ];
+
+        let connection;
+
+        try
+        {
+            
+        }
+        catch(e)
+        {
+            next(e);
+        }
+        finally
+        {
+            connection ? connection.release() : null;
+        }
     }
 }

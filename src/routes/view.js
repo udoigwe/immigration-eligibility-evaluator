@@ -16,5 +16,6 @@ router.get('/suitable-countries', viewsController.findSuitableCountries);
 router.get('/account', viewsController.account);
 router.get('/eligibility-check', viewsController.eligibilityCheck);
 router.get('/community', viewsController.community);
+router.get('/immigration-insights', viewsController.immigrationInsights);
 
 module.exports = router;

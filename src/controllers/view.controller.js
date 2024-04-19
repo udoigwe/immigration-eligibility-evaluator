@@ -36,5 +36,8 @@ module.exports = {
     },
     community: async (req, res) => {
         res.render('community', { title: 'Community', page_title: 'Community' });
+    },
+    immigrationInsights: async (req, res) => {
+        res.render('immigration-insights', { title: 'Immigration Insights', page_title: 'Immigration Insights' });
     }
 }

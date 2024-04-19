@@ -4,7 +4,10 @@ module.exports = {
     createPost: [
 		body("post")
 			.exists({ checkFalsy: true })
-			.withMessage("post required")
+			.withMessage("post required"),
+		body("post_category_id")
+			.exists({ checkFalsy: true })
+			.withMessage("Post Category required")
 	],
     replyPost: [
 		body("post_id")

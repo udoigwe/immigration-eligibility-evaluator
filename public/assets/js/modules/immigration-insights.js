@@ -5,31 +5,27 @@ $(function () {
     let token = sessionStorage.getItem('token');
 
 	$(document).ready(function($) {
-        //submit post
-        post();
-        //load posts
-        loadPosts();
-        //reply buttton
-        reply();
-        //reply message
-        replyPost();
-        //get all post categories
-        loadCategories();
+        //get all countries
+        loadCountries();
+        //get all visa types
+        loadVisaTypes();
+        //load insights
+        loadInsights();
 
-        //filter posts by categories
+        /* //filter posts by categories
         $("#category-filter").on("change", function(){
             var categoryID = $(this).val();
             loadPostsByCategory(categoryID);
-        })
+        }) */
     });
 
-    function replyPost()
+    function loadInsights()
     {
-        $('#reply-form').on('submit', function(e){
+        $('#insights-form').on('submit', function(e){
             e.preventDefault();
-            var replyModal = $("#replyModal");
-            var filteredCategoryID = $("#category-filter").find("option:selected").val();
             var form = $(this);
+            var countryCode = form.find("#country_code").val();
+            var visaCategoryID = form.find("#visa_category_id").val();
             var fields = form.find('input.required, select.required, textarea.required');
             
             blockUI();
@@ -48,22 +44,23 @@ $(function () {
             }
             
             $.ajax({
-                type: 'POST',
-                url: API_URL_ROOT+'/reply-post',
+                type: 'GET',
+                url: `${API_URL_ROOT}/insights/${countryCode}/${visaCategoryID}`,
                 data: JSON.stringify(form.serializeObject()),
                 dataType: 'json',
                 contentType: 'application/json',
                 headers:{'x-access-token':token},
                 success: function(response)
                 {
-                    unblockUI();
+                    var insights = response.insights;
+                    var insightsDiv = $('.insights');
+                    insightsDiv.html(insights);
                     form.get(0).reset();
-                    replyModal.modal('hide');
-                    showSimpleMessage("Success", response.message, "success");
-                    loadPostsByCategory(filteredCategoryID);
+                    unblockUI();
                 },
                 error: function(req, status, err)
                 {
+                    console.log(req)
                     showSimpleMessage("Attention", req.responseJSON.message, "error");
                     unblockUI();
                 }
@@ -276,43 +273,71 @@ $(function () {
         });
     }
 
-    function loadCategories()
+    function loadCountries()
     {
         blockUI();
 
         $.ajax({
             type: 'GET',
-            url: `${API_URL_ROOT}/post-categories`,
+            url: `${API_URL_ROOT}/countries`,
             dataType: 'json',
             contentType: 'application/json',
-            headers:{'x-access-token':token},
+            success: function(response)
+            {
+                const countries = response.data;
+                let html = '<option value="">Please select</option>';
+
+                for(let i = 0; i < countries.length; i++)
+                {
+                    const country = countries[i];
+
+                    html += `
+                        <option value="${country.CountryCode}">${country.CountryName}</option>
+                    `
+                }
+
+                $('#country_code').html(html);
+                
+                unblockUI();
+            },
+            error: function(req, status, err)
+            {
+                showSimpleHTMLMessage("Attention", req.responseJSON.message, "error");
+                unblockUI();
+            }
+        });
+    }
+    
+    function loadVisaTypes()
+    {
+        blockUI();
+
+        $.ajax({
+            type: 'GET',
+            url: `${API_URL_ROOT}/visa-categories`,
+            dataType: 'json',
+            contentType: 'application/json',
             success: function(response)
             {
                 const categories = response.data;
                 let html = '<option value="">Please select</option>';
-                let html2 = '<option selected value="">All</option>';
 
                 for(let i = 0; i < categories.length; i++)
                 {
                     const category = categories[i];
 
                     html += `
-                        <option value="${category.post_category_id}">${category.post_category}</option>
-                    `
-                    
-                    html2 += `
-                        <option value="${category.post_category_id}">${category.post_category}</option>
+                        <option value="${category.VisaCategoryID}">${category.CategoryName}</option>
                     `
                 }
 
-                $('#post_category_id').html(html);
-                $('#category-filter').html(html2);
+                $('#visa_category_id').html(html);
                 
                 unblockUI();
             },
             error: function(req, status, err)
             {
-                showSimpleMessage("Attention", req.responseJSON.message, "error");
+                showSimpleHTMLMessage("Attention", req.responseJSON.message, "error");
                 unblockUI();
             }
         });

@@ -2,6 +2,7 @@ const { validate } = require('../utils/functions');
 const authValidations = require('../validations/auth.validation');
 const applicationValidations = require('../validations/application.validation');
 const postValidations = require('../validations/post.validation');
+const resouceValidations = require('../validations/resources.validation');
 
 module.exports = {
     /* Auth route validators */
@@ -22,4 +23,7 @@ module.exports = {
     /* Post route validators */
     createPost: validate(postValidations.createPost),
     replyPost: validate(postValidations.replyPost),
+
+    /* Immigration Insights */
+    getImmigrationInsights: validate(resouceValidations.getImmigrationInsights),
 }

@@ -2,6 +2,191 @@
 <html lang="en">
     <head>
         <%- include('./partials/head') %>
+        <style>
+            .jumbotron {
+                position: relative;
+                background-image: url('assets/images/gallery/eligibility.png');
+                /* Replace 'your-image.jpg' with the path to your image */
+                background-size: cover;
+                background-position: center;
+                color: white;
+                /* Set text color to contrast with overlay */
+                padding: 150px 0;
+                /* Adjust padding as needed */
+                width: 100%;
+                /* Make the jumbotron full width */
+            }
+        
+            .overlay {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: rgba(0, 0, 0, 0.8);
+                /* Adjust the alpha value (last parameter) to make the overlay more or less transparent */
+            }
+        
+            .content {
+                position: relative;
+                z-index: 1;
+                text-align: center;
+            }
+        
+            /* Adjust text styles as needed */
+            .content h1,
+            .content p {
+                font-family: Arial, sans-serif;
+                color: white
+            }
+            .cta-button {
+                display: inline-block;
+                background-color: #007bff; /* Button background color */
+                color: white; /* Button text color */
+                padding: 10px 20px; /* Button padding */
+                font-size: 18px; /* Button font size */
+                text-decoration: none; /* Remove underline */
+                border-radius: 50px; /* Button border radius */
+                transition: background-color 0.3s ease; /* Smooth transition effect */
+            }
+
+            .cta-button:hover {
+                background-color: #0056b3; /* Button background color on hover */
+            }
+
+            .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
+
+    .card {
+      width: calc(33.33% - 20px); /* Adjust card width based on container width and spacing */
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 20px;
+    }
+
+    .card .overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5); /* Overlay color */
+      color: white;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .card:hover .overlay {
+      opacity: 1;
+    }
+
+    .card h2,
+    .card p {
+      margin-bottom: 10px;
+      text-align: center;
+      color: white
+    }
+
+    .card .date {
+      font-size: 14px;
+      color: #ccc;
+      margin-bottom: 10px;
+    }
+
+    .card a {
+      text-decoration: none;
+      color: white;
+      font-weight: bold;
+      background-color: #007bff;
+      padding: 10px 20px;
+      border-radius: 5px;
+      transition: background-color 0.3s ease;
+    }
+
+    .card a:hover {
+      background-color: #0056b3;
+    }
+
+    .card img {
+      width: 100%;
+      height: auto;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        flex-direction: column;
+      }
+
+      .card {
+        width: 100%;
+      }
+    }
+
+    .testimonial-container {
+      max-width: 1000px;
+      margin: 0 auto;
+      overflow-x: auto;
+      white-space: nowrap;
+      padding: 20px 0;
+    }
+
+    .testimonial {
+      display: inline-block;
+      width: 300px;
+      margin-right: 20px;
+      background-color: #f9f9f9;
+      padding: 20px;
+      border-radius: 10px;
+      position: relative; /* Added */
+    }
+
+    .testimonial p {
+      font-size: 16px;
+      line-height: 1.5;
+      overflow: hidden; /* Added */
+      max-height: 100px; /* Added */
+      margin-bottom: 10px; /* Added */
+      color: grey;
+    }
+
+    .testimonial-author {
+      font-weight: bold;
+      margin-top: 10px;
+    }
+
+    .avatar {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      overflow: hidden;
+      margin-right: 10px;
+      position: absolute; /* Added */
+      top: 20px; /* Added */
+      left: 20px; /* Added */
+    }
+
+    .avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* Hide scrollbar */
+    .testimonial-container::-webkit-scrollbar {
+      display: none;
+    }
+        </style>
     </head>
     <body onload="isAuthenticated(); displayProfile(); updateProfilePopUp();" class="loading" data-layout-color="light"  data-layout-mode="default" data-layout-size="fluid" data-topbar-color="light" data-leftbar-position="fixed" data-leftbar-color="light" data-leftbar-size='default' data-sidebar-user='true'>
         <!-- Begin page -->
@@ -16,70 +201,147 @@
                     <!-- Start Content-->
                     <div class="container-fluid">
 
-                        <!-- Form row -->
-                        <!-- <div class="row">
-                            <div class="col-md-6 col-12">
-                                <div class="card card-body">
-                                    <h1 class="card-title mx-auto text-center">GENDER</h1>
-
-                                    <h4 class="card-text gender mx-auto text-center"></h4>
-                                </div>
-                            </div>
-                            <div class="col-md-6 col-12">
-                                <div class="card card-body">
-                                    <h1 class="card-title mx-auto text-center">DATE OF BIRTH</h1>
-
-                                    <h4 class="card-text date_of_birth mx-auto text-center"></h4>
-                                </div>
-                            </div>
-                            <div class="col-md-4 col-12">
-                                <div class="card card-body">
-                                    <h1 class="card-title mx-auto text-center">NATIONALITY</h1>
-
-                                    <h4 class="card-text nationality mx-auto text-center"></h4>
-                                </div>
-                            </div>
-                            <div class="col-md-4 col-12">
-                                <div class="card card-body">
-                                    <h1 class="card-title mx-auto text-center">MARITAL STATUS</h1>
-
-                                    <h4 class="card-text marital-status mx-auto text-center"></h4>
-                                </div>
-                            </div>
-                            <div class="col-md-4 col-12">
-                                <div class="card card-body">
-                                    <h1 class="card-title mx-auto text-center">EDUCATIONAL LEVEL</h1>
-
-                                    <h4 class="card-text mx-auto educational-level text-center"></h4>
-                                </div>
-                            </div>
-                            <div class="col-md-6 col-12">
-                                <div class="card card-body">
-                                    <h1 class="card-title mx-auto text-center">YEARS OF WORK EXPERIENCE</h1>
-
-                                    <h4 class="card-text mx-auto years-of-experience text-center"></h4>
-                                </div>
-                            </div>
-                            <div class="col-md-6 col-12">
-                                <div class="card card-body">
-                                    <h1 class="card-title mx-auto text-center">LANGUAGE PROFICIENCY</h1>
-
-                                    <h4 class="card-text mx-auto language-proficiency text-center"></h4>
-                                </div>
-                            </div>
-                            
-                        </div> -->
-
                         <div class="row">
                             <div class="col-lg-12">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <div class="ratio ratio-16x9">
-                                            <iframe src="https://www.youtube.com/embed/videoseries?si=3lzGu5F_9Mpn_bnc&amp;list=PLxvpegEtz1turMSs6vpqtW8ukw5DXaqfk"></iframe>
+                                <div id="carouselExampleFade" class="carousel slide carousel-fade" data-bs-ride="carousel">
+                                    <div class="carousel-inner">
+                                        <div class="carousel-item active">
+                                            <img class="d-block img-fluid" src="assets/images/sliders/australia.jpg" width="100%" alt="First slide">
+                                            <div class="carousel-caption d-none d-md-block">
+                                                <h3 class="text-white">Ready to explore the Land Down Under?</h3>
+                                                <p>Dive into the adventure of a lifetime and discover the boundless opportunities awaiting you in Australia.</p>
+                                                <a href="/eligibility-check" class="cta-button">Explore</a>
+                                            </div>
+                                        </div>
+                                        <div class="carousel-item">
+                                            <img class="d-block img-fluid" src="assets/images/sliders/us.jpg" width="100%" alt="Second slide">
+                                            <div class="carousel-caption d-none d-md-block">
+                                                <h3 class="text-white">Are you looking to live the American Dream?</h3>
+                                                <p>Discover endless opportunities in the land of freedom and prosperity with our immigration services tailored to
+                                                    your
+                                                    needs.</p>
+                                                <a href="/eligibility-check" class="cta-button">Explore</a>
+                                            </div>
+                                        </div>
+                                        <div class="carousel-item">
+                                            <img class="d-block img-fluid" src="assets/images/sliders/france.jpg" width="100%" alt="Third slide">
+                                            <div class="carousel-caption d-none d-md-block">
+                                                <h3 class="text-white">Are you ready to immerse yourself in the rich culture and timeless charm of France?</h3>
+                                                <p>Whether you're drawn to France for its world-renowned cuisine, historic landmarks, or dynamic arts scene, we're here to
+                                                assist you at every stage of the immigration process.</p>
+                                                <a href="/eligibility-check" class="cta-button">Explore</a>
+                                            </div>
+                                        </div>
+                                        <div class="carousel-item">
+                                            <img class="d-block img-fluid" src="assets/images/sliders/germany.jpg" width="100%" alt="Third slide">
+                                            <div class="carousel-caption d-none d-md-block">
+                                                <h3 class="text-white">Ready to experience the a blend of innovation, culture, and opportunity in Germany?</h3>
+                                                <p>Explore the dynamic cities, picturesque landscapes, and world-class education system with our comprehensive immigration
+                                                services tailored to your needs.</p>
+                                                <a href="/eligibility-check" class="cta-button">Explore</a>
+                                            </div>
+                                        </div>
+                                        <div class="carousel-item">
+                                            <img class="d-block img-fluid" src="assets/images/sliders/canada.jpg" width="100%" alt="Third slide">
+                                            <div class="carousel-caption d-none d-md-block">
+                                                <h3 class="text-white">Ready to embark on a new chapter in the Great White North?</h3>
+                                                <p>Experience the warmth of Canadian hospitality and the vast opportunities that await you with our immigration services
+                                                tailored to your aspirations.</p>
+                                                <a href="/eligibility-check" class="cta-button">Explore</a>
+                                            </div>
                                         </div>
                                     </div>
+                                    <a class="carousel-control-prev" href="#carouselExampleFade" role="button" data-bs-slide="prev">
+                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                        <span class="visually-hidden">Previous</span>
+                                    </a>
+                                    <a class="carousel-control-next" href="#carouselExampleFade" role="button" data-bs-slide="next">
+                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                        <span class="visually-hidden">Next</span>
+                                    </a>
                                 </div>
                             </div> <!-- end col -->
+                        </div>
+                        <div class="row" style="margin-top: 50px;">
+                            <div class="col-lg-12" style="display: flex; justify-content: center; flex-direction: column; align-items: center;">
+                                <h3>
+                                    <span class="badge bg-dark rounded-pill" style="padding: 10px;">News</span>
+                                </h3>
+                                <h5 class="display-5" style="display: block;">Recent News</h5>
+                            </div>
+                            <div class="container">
+                                <div class="card">
+                                    <img src="assets/images/sliders/brazil.jpg" alt="Blog Post 1 Image">
+                                    <div class="overlay">
+                                        <h2>Blog Post 1</h2>
+                                        <p class="date">Published: January 1, 2022</p>
+                                        <a href="#">Read More</a>
+                                    </div>
+                                </div>
+                                <div class="card">
+                                    <img src="assets/images/sliders/uae.jpg" alt="Blog Post 2 Image">
+                                    <div class="overlay">
+                                        <h2>Blog Post 2</h2>
+                                        <p class="date">Published: January 2, 2022</p>
+                                        <a href="#">Read More</a>
+                                    </div>
+                                </div>
+                                <div class="card">
+                                    <img src="assets/images/gallery/ielts.jpg" alt="Blog Post 3 Image">
+                                    <div class="overlay">
+                                        <h2>Blog Post 3</h2>
+                                        <p class="date">Published: January 3, 2022</p>
+                                        <a href="#">Read More</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="/eligibility-check" class="cta-button" style="width: 200px; margin-top: 10px; margin-bottom: 50px;">Load
+                            More</a>
+                        <div class="jumbotron">
+                            <div class="overlay"></div>
+                            <div class="content">
+                                <h1>Unlock Your Potential: Check Your Eligibility Today</h1>
+                                <p>Our comprehensive eligibility assessment tool allows you to evaluate your qualifications<br /> and determine
+                                    your potential
+                                    for success in various immigration or educational programs.</p>
+                                <a href="/eligibility-check" class="cta-button">Get Started</a>
+                            </div>
+                        </div>
+                        <div class="row" style="margin-top: 50px;">
+                            <div class="col-lg-12" style="display: flex; justify-content: center; flex-direction: column; align-items: center;">
+                                <h3>
+                                    <span class="badge bg-dark rounded-pill" style="padding: 10px;">Testimonies</span>
+                                </h3>
+                                <h5 class="display-5" style="display: block;">Our Happy Clients</h5>
+                                <div class="testimonial-container">
+                                    <div class="testimonial">
+                                        <div class="avatar">
+                                            <img src="avatar1.jpg" alt="Avatar">
+                                        </div>
+                                        <p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer sit amet urna vitae mi suscipit consequat.
+                                            Etiam ac dui vitae libero cursus ultricies."</p>
+                                        <p class="testimonial-author">John Doe</p>
+                                    </div>
+                                    <div class="testimonial">
+                                        <div class="avatar">
+                                            <img src="avatar2.jpg" alt="Avatar">
+                                        </div>
+                                        <p>"Vivamus sed velit euismod, fermentum enim vel, luctus libero. In auctor nibh non dolor lacinia, ut rutrum
+                                            velit fermentum."</p>
+                                        <p class="testimonial-author">Jane Smith</p>
+                                    </div>
+                                    <div class="testimonial">
+                                        <div class="avatar">
+                                            <img src="avatar3.jpg" alt="Avatar">
+                                        </div>
+                                        <p>"Fusce ullamcorper ligula a metus ullamcorper, ut rhoncus velit ullamcorper. Suspendisse id felis sagittis,
+                                            aliquet ligula at, mollis lectus."</p>
+                                        <p class="testimonial-author">Michael Johnson</p>
+                                    </div>
+                                    <!-- Add more testimonials here -->
+                                </div>
+                            </div>
                         </div>
                         <!-- end row -->
                             

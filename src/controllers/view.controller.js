@@ -20,7 +20,7 @@ module.exports = {
 
     /* Protected pages */
     dashboard: async (req, res) => {
-        res.render('dashboard', { title:'Dashboard', page_title: 'Dashboard'})
+        res.render('dashboard', { title:'Home', page_title: 'Home'})
     },
     applications: async (req, res) => {
         res.render('applications', { title:'Applications', page_title: 'Applications'})

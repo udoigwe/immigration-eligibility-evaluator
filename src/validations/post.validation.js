@@ -16,5 +16,10 @@ module.exports = {
 		body("reply")
 			.exists({ checkFalsy: true })
 			.withMessage("Reply is required"),
+	],
+	getBlogPost: [
+		param("blog_post_id")
+			.exists({ checkFalsy: true })
+			.withMessage("blog post ID required")
 	]
 }

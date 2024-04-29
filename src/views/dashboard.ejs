@@ -16,6 +16,20 @@
                 width: 100%;
                 /* Make the jumbotron full width */
             }
+            
+            .jumbotron2 {
+                position: relative;
+                background-image: url('assets/images/gallery/explore.jpg');
+                /* Replace 'your-image.jpg' with the path to your image */
+                background-size: cover;
+                background-position: center;
+                color: white;
+                /* Set text color to contrast with overlay */
+                padding: 150px 0;
+                /* Adjust padding as needed */
+                width: 100%;
+                /* Make the jumbotron full width */
+            }
         
             .overlay {
                 position: absolute;
@@ -95,7 +109,8 @@
     .card p {
       margin-bottom: 10px;
       text-align: center;
-      color: white
+      color: white;
+      font-size: 15px;
     }
 
     .card .date {
@@ -262,42 +277,15 @@
                                 </div>
                             </div> <!-- end col -->
                         </div>
-                        <div class="row" style="margin-top: 50px;">
+                        <div class="row" style="margin-top: 50px; margin-bottom: 50px;">
                             <div class="col-lg-12" style="display: flex; justify-content: center; flex-direction: column; align-items: center;">
                                 <h3>
                                     <span class="badge bg-dark rounded-pill" style="padding: 10px;">News</span>
                                 </h3>
                                 <h5 class="display-5" style="display: block;">Recent News</h5>
                             </div>
-                            <div class="container">
-                                <div class="card">
-                                    <img src="assets/images/sliders/brazil.jpg" alt="Blog Post 1 Image">
-                                    <div class="overlay">
-                                        <h2>Blog Post 1</h2>
-                                        <p class="date">Published: January 1, 2022</p>
-                                        <a href="#">Read More</a>
-                                    </div>
-                                </div>
-                                <div class="card">
-                                    <img src="assets/images/sliders/uae.jpg" alt="Blog Post 2 Image">
-                                    <div class="overlay">
-                                        <h2>Blog Post 2</h2>
-                                        <p class="date">Published: January 2, 2022</p>
-                                        <a href="#">Read More</a>
-                                    </div>
-                                </div>
-                                <div class="card">
-                                    <img src="assets/images/gallery/ielts.jpg" alt="Blog Post 3 Image">
-                                    <div class="overlay">
-                                        <h2>Blog Post 3</h2>
-                                        <p class="date">Published: January 3, 2022</p>
-                                        <a href="#">Read More</a>
-                                    </div>
-                                </div>
-                            </div>
+                            <div class="container blog-posts"></div>
                         </div>
-                        <a href="/eligibility-check" class="cta-button" style="width: 200px; margin-top: 10px; margin-bottom: 50px;">Load
-                            More</a>
                         <div class="jumbotron">
                             <div class="overlay"></div>
                             <div class="content">
@@ -308,7 +296,7 @@
                                 <a href="/eligibility-check" class="cta-button">Get Started</a>
                             </div>
                         </div>
-                        <div class="row" style="margin-top: 50px;">
+                        <div class="row" style="margin-top: 50px; margin-bottom: 50px">
                             <div class="col-lg-12" style="display: flex; justify-content: center; flex-direction: column; align-items: center;">
                                 <h3>
                                     <span class="badge bg-dark rounded-pill" style="padding: 10px;">Testimonies</span>
@@ -317,30 +305,35 @@
                                 <div class="testimonial-container">
                                     <div class="testimonial">
                                         <div class="avatar">
-                                            <img src="avatar1.jpg" alt="Avatar">
+                                            <img src="/assets/images/users/user-1.jpg" alt="Avatar">
                                         </div>
-                                        <p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer sit amet urna vitae mi suscipit consequat.
-                                            Etiam ac dui vitae libero cursus ultricies."</p>
+                                        <p>This is the best platform for everything immigration</p>
                                         <p class="testimonial-author">John Doe</p>
                                     </div>
                                     <div class="testimonial">
                                         <div class="avatar">
-                                            <img src="avatar2.jpg" alt="Avatar">
+                                            <img src="/assets/images/users/user-2.jpg" alt="Avatar">
                                         </div>
-                                        <p>"Vivamus sed velit euismod, fermentum enim vel, luctus libero. In auctor nibh non dolor lacinia, ut rutrum
-                                            velit fermentum."</p>
+                                        <p>America here I come</p>
                                         <p class="testimonial-author">Jane Smith</p>
                                     </div>
                                     <div class="testimonial">
                                         <div class="avatar">
-                                            <img src="avatar3.jpg" alt="Avatar">
+                                            <img src="/assets/images/users/user-3.jpg" alt="Avatar">
                                         </div>
-                                        <p>"Fusce ullamcorper ligula a metus ullamcorper, ut rhoncus velit ullamcorper. Suspendisse id felis sagittis,
-                                            aliquet ligula at, mollis lectus."</p>
+                                        <p>I now know more about immigration. Thank IEE</p>
                                         <p class="testimonial-author">Michael Johnson</p>
                                     </div>
                                     <!-- Add more testimonials here -->
                                 </div>
+                            </div>
+                        </div>
+                        <div class="jumbotron2">
+                            <div class="overlay"></div>
+                            <div class="content">
+                                <h1>Explore the new 'Compare Countries' feature</h1>
+                                <p>Quickly compare immigration eligibility criteria between countries to make informed decisions about your visa options!</p>
+                                <a href="/compare-countries" class="cta-button">Get Started</a>
                             </div>
                         </div>
                         <!-- end row -->

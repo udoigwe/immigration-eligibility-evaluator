@@ -6,6 +6,7 @@ $(function () {
 
     $(document).ready(function($) {
         displayUserDetails();
+        loadBlogPosts();
     });
 
     function displayUserDetails()
@@ -25,5 +26,48 @@ $(function () {
         $('.educational-level').text(educationalLevel);
         $('.years-of-experience').text(yearsOfExperience);
         $('.language-proficiency').text(languageProficiency);
+    }
+
+    function loadBlogPosts()
+    {
+        blockUI();
+
+        $.ajax({
+            type: 'GET',
+            url: `${API_URL_ROOT}/blog-posts`,
+            dataType: 'json',
+            contentType: 'application/json',
+            headers:{'x-access-token':token},
+            success: function(response)
+            {
+                const posts = response.data;
+                let html = '';
+
+                for(let i = 0; i < posts.length; i++)
+                {
+                    const post = posts[i];
+
+                    html += `
+                        <div class="card">
+                            <img src="${post.blog_post_cover_image}" alt="${post.blog_post_title}">
+                            <div class="overlay">
+                                <h2>${post.blog_post_title}</h2>
+                                <p class="date">Published: ${moment.unix(post.blog_post_created_at).format('MMMM D, YYYY')}</p>
+                                <a href="/blog-post?post-id=${post.blog_post_id}">Read More</a>
+                            </div>
+                        </div>
+                    `
+                }
+
+                $('.blog-posts').html(html);
+                
+                unblockUI();
+            },
+            error: function(req, status, err)
+            {
+                alert(req.responseJSON.message)
+                unblockUI();
+            }
+        });
     }
 })

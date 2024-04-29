@@ -39,5 +39,11 @@ module.exports = {
     },
     immigrationInsights: async (req, res) => {
         res.render('immigration-insights', { title: 'Immigration Insights', page_title: 'Immigration Insights' });
+    },
+    compareCountries: async (req, res) => {
+        res.render('compareCountries', { title: 'Compare Countries', page_title: 'Compare Countries' });
+    },
+    blogPost: async (req, res) => {
+        res.render('blogPost', { title: 'Blog Post', page_title: 'Blog Post' });
     }
 }

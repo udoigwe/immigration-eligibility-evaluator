@@ -348,12 +348,80 @@ module.exports = {
         } = req.body;
 
         const countryArray = [ country_one, country_two ];
+        const immigrationDetails = [];
 
         let connection;
 
         try
         {
-            
+            //instantiate db connection
+            connection = await pool.getConnection();
+
+            //iterate through both countries to geth details
+            for(let i = 0; i < countryArray.length; i++)
+            {
+                const country = countryArray[i];
+                let countryVisaDetailsObj = {};
+
+                //get country details
+                const [ countries ] = await connection.execute(`
+                    SELECT * FROM countries 
+                    WHERE CountryCode = ?
+                    LIMIT 1`,
+                    [ country ]
+                );
+                
+                //get visa_category details
+                const [ visaCategories ] = await connection.execute(`
+                    SELECT * FROM visacategories 
+                    WHERE VisaCategoryID = ?
+                    LIMIT 1`,
+                    [ visa_category_id ]
+                );
+
+                countryVisaDetailsObj.country_name = countries[0].CountryName;
+                countryVisaDetailsObj.country_code = countries[0].CountryCode;
+                countryVisaDetailsObj.visa_category = visaCategories[0].CategoryName;
+                countryVisaDetailsObj.visa_criteria = [];
+
+                //get visa category details
+                const [ visacriteria ] = await connection.execute(`
+                    SELECT a.*, b.CategoryName, c.CriterionName
+                    FROM visacriteria a 
+                    LEFT JOIN visacategories b ON a.VisaCategoryID = b.VisaCategoryID
+                    LEFT JOIN criteria c ON a.CriterionID = c.CriterionID
+                    WHERE a.VisaCategoryID = ?`,
+                    [ visa_category_id ]
+                );
+
+                for(let j = 0; j < visacriteria.length; j++) 
+                {
+                    const visacriterion = visacriteria[j];
+
+                    //get all country visa criteria
+                    const [ countryVisaCriteria ] = await connection.execute(`
+                        SELECT * 
+                        FROM countrycriteria
+                        WHERE VisaCriteriaID = ?
+                        AND CountryCode = ?`,
+                        [ visacriterion.VisaCriteriaID, country ]
+                    );
+
+                    const visacriterionDetails = {
+                        criterion_name: visacriterion.CriterionName,
+                        criterion_details: countryVisaCriteria
+                    }
+
+                    countryVisaDetailsObj.visa_criteria.push(visacriterionDetails)
+                }
+
+                immigrationDetails.push(countryVisaDetailsObj);
+            }
+
+            res.json({
+                error: false,
+                immigrationDetails
+            })
         }
         catch(e)
         {

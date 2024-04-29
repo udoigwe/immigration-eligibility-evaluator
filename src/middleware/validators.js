@@ -19,10 +19,12 @@ module.exports = {
     evaluate: validate(applicationValidations.evaluate),
     findSuitableCountries: validate(applicationValidations.findSuitableCountries),
     getCountryVisaCriteria: validate(applicationValidations.getCountryVisaCriteria),
+    compareCountries: validate(resouceValidations.compareCountries),
 
     /* Post route validators */
     createPost: validate(postValidations.createPost),
     replyPost: validate(postValidations.replyPost),
+    getBlogPost: validate(postValidations.getBlogPost),
 
     /* Immigration Insights */
     getImmigrationInsights: validate(resouceValidations.getImmigrationInsights),

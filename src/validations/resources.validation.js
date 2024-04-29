@@ -11,4 +11,15 @@ module.exports = {
 			.exists({ checkFalsy: true })
 			.withMessage("Country Code is required"),
 	],
+	compareCountries: [
+		body("country_one")
+			.exists({ checkFalsy: true })
+			.withMessage("Country One is required"),
+		body("country_two")
+		 	.exists({ checkFalsy: true})
+			.withMessage("Country Two is required"),
+        body("visa_category_id")
+            .exists({ checkFalsy: true })
+            .withMessage("Visa Category ID is required")
+	],
 }

@@ -130,7 +130,7 @@ module.exports = {
                     scores[0].CriterionName === "Employer Sponsorship" ?
                     `Having an employer sponsirship will increase your chances for a ${scores[0].CategoryName} in ${scores[0].CountryName}`:
                     scores[0].CriterionName === "IELTS Score" ?
-                    `Increasing your IELTS Score from ${scores[0].CriteriaOptions} to ${scores[0].CriteriaOptions} will increase your chances for a ${scores[0].CategoryName} in ${scores[0].CountryName}`: "";
+                    `Increasing your IELTS Score will increase your chances for a ${scores[0].CategoryName} in ${scores[0].CountryName}`: "";
 
                     recommendations.push(recommendation);
                 }

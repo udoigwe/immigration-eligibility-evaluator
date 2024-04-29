@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 19, 2024 at 10:10 PM
+-- Generation Time: Apr 29, 2024 at 10:24 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -20,6 +20,30 @@ SET time_zone = "+00:00";
 --
 -- Database: `iee`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `blog`
+--
+
+CREATE TABLE `blog` (
+  `blog_post_id` int(11) NOT NULL,
+  `blog_post_title` varchar(255) NOT NULL,
+  `blog_post_created_at` varchar(255) NOT NULL,
+  `blog_post_author` varchar(255) NOT NULL,
+  `blog_post` text NOT NULL,
+  `blog_post_cover_image` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `blog`
+--
+
+INSERT INTO `blog` (`blog_post_id`, `blog_post_title`, `blog_post_created_at`, `blog_post_author`, `blog_post`, `blog_post_cover_image`) VALUES
+(1, 'Brazilian Carnival: A Cultural Extravaganza and its Influence on Immigration to Brazil', '1713666188', 'Ijeoma Eze', '<p>\nThe vibrant and exuberant Brazilian Carnival stands as a testament to the country\'s rich cultural heritage and has long been a magnet for tourists and immigrants alike. This annual celebration, known for its electrifying samba music, dazzling costumes, and energetic street parades, captures the essence of Brazilian identity and has a significant impact on immigration trends in Brazil.\n</p>\n\n<h5>A Spectacle of Diversity</h5>\n\n<p>\nThe Brazilian Carnival is a melting pot of cultural influences, reflecting the country\'s diverse population and history. From African rhythms to indigenous traditions, and Portuguese customs to modern-day innovations, the Carnival embraces a myriad of cultural elements, creating a truly unique and inclusive experience.\n</p>\n\n<h5>Attracting Global Attention</h5>\n\n<p>\nWith its global reputation for being the \"Greatest Show on Earth,\" the Brazilian Carnival draws millions of visitors from around the world each year. Tourists flock to cities like Rio de Janeiro, São Paulo, and Salvador to witness the spectacle firsthand, immersing themselves in the infectious energy and joie de vivre that permeates the streets during the festivities.\n</p>\n\n<h5>Immigration and Cultural Exchange</h5>\n\n<p>\nBeyond its allure for tourists, the Brazilian Carnival also plays a significant role in immigration to Brazil. Many visitors are so captivated by the vibrancy and warmth of Brazilian culture during the Carnival that they decide to extend their stay or even make Brazil their new home.\n</p>\n\n<h5>Opportunities and Challenges</h5>\n\n<p>\nFor immigrants, Brazil offers a diverse range of opportunities, from employment prospects in industries such as tourism, entertainment, and hospitality to the chance to experience a rich tapestry of cultural traditions. However, navigating the immigration process can be complex, requiring a thorough understanding of visa requirements, residency permits, and legal regulations.\n</p>\n\n<h5>Navigating the Immigration Landscape</h5>\n\n<p>\nAs interest in relocating to Brazil grows, immigrants must be well-informed about the various pathways available to them. Whether seeking temporary residency to participate in the Carnival festivities or pursuing long-term settlement, individuals must adhere to the country\'s immigration laws and procedures.\n</p>\n\n<h5>The Role of Carnival in Integration</h5>\n\n<p>\nFor immigrants who have chosen to make Brazil their home, the Carnival serves as a symbol of integration and belonging. Participating in Carnival activities, whether as performers, spectators, or volunteers, provides newcomers with an opportunity to connect with local communities, forge friendships, and contribute to the cultural tapestry of Brazil.\n</p>\n\n<h5>Looking Ahead</h5>\n\n<p>\nAs Brazil continues to evolve as a global destination for tourism and immigration, the Brazilian Carnival remains a beacon of cultural pride and celebration. Its enduring legacy as a symbol of unity, diversity, and inclusivity underscores the integral role it plays in shaping Brazil\'s identity and welcoming newcomers to its shores.\n</p>\n\n<h5>Conclusion</h5>\n\n<p>\nIn conclusion, the Brazilian Carnival is not just a festival; it\'s a cultural phenomenon that transcends borders and brings people together from all walks of life. As Brazil embraces its role on the world stage, the Carnival serves as a powerful reminder of the country\'s rich heritage and its ongoing journey towards a more inclusive and vibrant future.\n</p>\n\n<p>\n<a href=\"#\">Learn more about immigration to Brazil and explore opportunities to experience the magic of the Brazilian Carnival firsthand.</a>\n</p>', 'assets/images/sliders/brazil.jpg'),
+(2, 'Unlock the Sky: Burj Khalifa and the Gateway to Immersive Experiences', '1713666188', 'Ijeoma Eze', '\n<p>\nIn the heart of the bustling metropolis of Dubai, a marvel of human ingenuity pierces the clouds, reaching for the heavens. Standing tall as the world\'s tallest building, the Burj Khalifa isn\'t just a structure; it\'s an icon of aspiration and a beacon of opportunity.\n</p>\n\n<h5>Rising Above: A Towering Achievement</h5>\n\n<p>\nAt a staggering height of 828 meters, the Burj Khalifa soars above the city skyline, commanding attention and admiration from all who behold its majestic silhouette. Its sleek design, inspired by the natural geometry of a desert flower, symbolizes the fusion of innovation and elegance.\n</p>\n\n<h5>A Window to the World</h5>\n\n<p>\nFrom its lofty observation decks, visitors are treated to panoramic views that stretch as far as the eye can see. The sprawling cityscape of Dubai unfolds beneath them, revealing a tapestry of modern architecture, pristine beaches, and desert vistas. At sunset, the city transforms into a canvas of vibrant hues, painting the sky with a symphony of colors.\n</p>\n\n<h5>A Journey of Discovery</h5>\n\n<p>\nBut the allure of the Burj Khalifa extends beyond its awe-inspiring height. It serves as a gateway to a world of immersive experiences, where visitors can embark on a journey of discovery and exploration. From the interactive exhibits in the At the Top SKY lounge to the immersive virtual reality tours of Dubai\'s past, present, and future, every corner of the Burj Khalifa invites visitors to uncover the secrets of this architectural marvel.\n</p>\n\n<h5>Impact on Immigration: A World of Opportunity</h5>\n\n<p>\nThe Burj Khalifa isn\'t just a testament to human achievement; it\'s also a catalyst for growth and opportunity. As one of the world\'s most iconic landmarks, it attracts millions of tourists from every corner of the globe, each seeking to experience the magic of Dubai firsthand.\n</p>\n\n<h5>The Magnetic Pull of Dubai</h5>\n\n<p>\nFor many visitors, the allure of the Burj Khalifa is the first step on a journey that leads to new horizons. Dubai\'s reputation as a global hub for business, innovation, and culture makes it an attractive destination for immigrants seeking to build a better future for themselves and their families.\n</p>\n\n<h5>Opportunity Awaits</h5>\n\n<p>\nFrom entrepreneurs and professionals to artists and dreamers, Dubai welcomes individuals from all walks of life, offering a wealth of opportunities and a vibrant multicultural environment. Whether you\'re drawn to the city\'s thriving economy, its world-class amenities, or its diverse cultural tapestry, Dubai has something to offer everyone.\n</p>\n\n<h5>Experience the Extraordinary</h5>\n\n<p>\nSo why wait? Embark on an unforgettable adventure and experience the magic of Dubai and the Burj Khalifa for yourself. Whether you\'re gazing out over the city from its lofty heights or exploring its vibrant streets below, you\'ll discover a world of wonder waiting to be explored.\n</p>\n\n<h5>Conclusion: Reach for the Sky</h5>\n\n<p>\nIn conclusion, the Burj Khalifa isn\'t just a building; it\'s a symbol of possibility and a testament to the human spirit. Its impact on immigration to Dubai is a testament to the city\'s allure and the opportunities it offers to those who dare to dream. So why not join them? Come, unlock the sky, and experience the extraordinary heights of Dubai and the Burj Khalifa.\n</p>\n\n<p>\nYour adventure awaits.\n</p>', 'assets/images/sliders/uae.jpg'),
+(3, 'The Impact of IELTS in Immigration: Conquering the Fear and Best Ways to Pass', '1713666188', 'Ijeoma Eze', '\n<p>\nThe International English Language Testing System (IELTS) plays a crucial role in immigration processes for many countries around the world. This standardized test assesses the language proficiency of individuals who wish to study, work, or immigrate to English-speaking countries. Let\'s explore the impact of IELTS in immigration and discover effective strategies to conquer the fear associated with it.\n</p>\n\n<h2>Understanding the Significance</h2>\n\n<p>\nIELTS scores are often a prerequisite for visa applications, particularly for student visas, work permits, and permanent residency applications. Immigration authorities use IELTS scores to evaluate an applicant\'s ability to communicate effectively in English, which is essential for integration into English-speaking communities.\n</p>\n\n<h5>Conquering the Fear of IELTS</h5>\n\n<p>\nMany individuals experience anxiety and apprehension when faced with the prospect of taking the IELTS exam. However, it\'s important to remember that IELTS is designed to assess your language skills objectively. By adopting a positive mindset, setting realistic goals, and practicing regularly, you can overcome your fear of IELTS and approach the exam with confidence.\n</p>\n\n<h5>Effective Strategies to Conquer the Fear:</h5>\n\n<ol>\n    <li><strong>Understand the Test Format:</strong> Familiarize yourself with the structure and format of the IELTS exam, including the types of questions and the timing of each section.</li>\n    <li><strong>Practice Regularly:</strong> Dedicate time to practicing each component of the IELTS exam, including listening, reading, writing, and speaking. Utilize official IELTS practice materials and online resources to improve your skills.</li>\n    <li><strong>Seek Feedback:</strong> Take advantage of opportunities to receive feedback on your language proficiency from teachers, tutors, or language exchange partners. Constructive feedback can help identify areas for improvement and enhance your performance on the exam.</li>\n    <li><strong>Simulate Test Conditions:</strong> Mimic the exam environment as closely as possible during your practice sessions. Practice timed exercises, adhere to the exam instructions, and simulate speaking tasks with a partner to build confidence.</li>\n    <li><strong>Stay Positive:</strong> Maintain a positive attitude throughout your preparation journey. Focus on your progress, celebrate your achievements, and visualize success on exam day.</li>\n</ol>\n\n<h5>Best Ways to Pass the IELTS Exam</h5>\n\n<p>\nAchieving a desirable score on the IELTS exam requires diligent preparation and effective study strategies. Here are some best practices to help you succeed:\n</p>\n\n<ol>\n    <li><strong>Set Clear Goals:</strong> Establish realistic score targets for each section of the exam based on your immigration or academic requirements.</li>\n    <li><strong>Develop Strong Language Skills:</strong> Enhance your English language proficiency in all areas, including listening, reading, writing, and speaking. Focus on building vocabulary, grammar, and comprehension skills through targeted practice.</li>\n    <li><strong>Practice Time Management:</strong> Allocate sufficient time for each section of the exam during your practice sessions. Develop strategies to manage your time effectively and prioritize questions based on difficulty.</li>\n    <li><strong>Utilize Official Resources:</strong> Take advantage of official IELTS practice materials, sample questions, and past exam papers to familiarize yourself with the test format and content.</li>\n    <li><strong>Enhance Speaking Skills:</strong> Practice speaking English regularly with native speakers or language partners to improve fluency, pronunciation, and coherence. Record yourself during practice sessions to identify areas for improvement.</li>\n    <li><strong>Improve Reading and Listening Skills:</strong> Expose yourself to a variety of English texts, such as articles, essays, and academic journals, to enhance reading comprehension. Listen to podcasts, watch English-language movies, and engage with audio materials to improve listening skills.</li>\n    <li><strong>Master Writing Techniques:</strong> Learn the conventions of academic and general writing styles and practice writing essays, reports, and letters within the specified time limits. Focus on organizing your ideas logically, using appropriate language, and addressing the task requirements effectively.</li>\n</ol>\n\n<h5>Tips and Skills for Success</h5>\n\n<p>\nIn addition to effective study strategies, consider incorporating the following tips and skills into your IELTS preparation:\n</p>\n\n<ul>\n    <li><strong>Effective Note-Taking:</strong> Develop efficient note-taking techniques to capture key information while listening to audio recordings or reading passages. Use abbreviations, symbols, and keywords to summarize main ideas and supporting details.</li>\n    <li><strong>Critical Thinking:</strong> Practice critical thinking skills by analyzing and evaluating information presented in reading passages and listening exercises. Develop the ability to identify main arguments, recognize implicit meanings, and draw logical conclusions.</li>\n    <li><strong>Active Listening:</strong> Cultivate active listening skills by engaging with a variety of English-language materials, such as podcasts, TED talks, and news broadcasts. Focus on understanding main ideas, identifying supporting details, and making inferences based on context.</li>\n    <li><strong>Effective Communication:</strong> Practice expressing your ideas clearly and coherently in both spoken and written English. Develop the ability to organize your thoughts logically, use appropriate vocabulary and grammar, and convey your message with confidence.</li>\n    <li><strong>Time Management:</strong> Develop effective time management strategies to maximize your efficiency during the exam. Pace yourself appropriately, allocate time for each section based on its weighting, and monitor your progress to ensure completion within the allotted time.</li>\n</ul>\n\n<h5>Conclusion</h5>\n\n<p>\nIn conclusion, the IELTS exam serves as a gateway to immigration opportunities in English-speaking countries around the world. By conquering the fear associated with IELTS and adopting effective study strategies, you can increase your chances of success and achieve your immigration goals. Remember to approach the exam with confidence, perseverance, and a commitment to excellence.\n</p>', 'assets/images/gallery/ielts.jpg');
 
 -- --------------------------------------------------------
 
@@ -413,7 +437,24 @@ INSERT INTO `evaluations` (`EvaluationID`, `UserID`, `ChoiceCountryCode`, `Choic
 (6, 7, 'AUS', 1, '2024-03-31 23:44:22'),
 (7, 7, 'AUS', 1, '2024-03-31 23:45:56'),
 (8, 7, 'AUS', 2, '2024-04-05 23:20:41'),
-(9, 7, 'GER', 2, '2024-04-05 23:26:07');
+(9, 7, 'GER', 2, '2024-04-05 23:26:07'),
+(13, 7, 'USA', 1, '2024-04-29 15:55:44'),
+(14, 7, 'USA', 1, '2024-04-29 15:58:25'),
+(15, 7, 'USA', 1, '2024-04-29 16:02:53'),
+(16, 7, 'USA', 1, '2024-04-29 16:04:09'),
+(18, 7, 'USA', 1, '2024-04-29 16:08:40'),
+(19, 7, 'USA', 1, '2024-04-29 16:09:52'),
+(20, 7, 'USA', 1, '2024-04-29 16:11:10'),
+(21, 7, 'USA', 2, '2024-04-29 16:14:18'),
+(22, 7, 'USA', 2, '2024-04-29 16:14:39'),
+(23, 7, 'USA', 1, '2024-04-29 16:21:41'),
+(24, 7, 'USA', 1, '2024-04-29 16:24:59'),
+(25, 7, 'GBR', 1, '2024-04-29 16:25:15'),
+(26, 7, 'GBR', 1, '2024-04-29 16:26:34'),
+(27, 7, 'USA', 1, '2024-04-29 16:31:56'),
+(28, 7, 'USA', 1, '2024-04-29 16:33:30'),
+(29, 7, 'USA', 1, '2024-04-29 16:37:38'),
+(30, 7, 'GBR', 2, '2024-04-29 16:41:25');
 
 -- --------------------------------------------------------
 
@@ -815,7 +856,107 @@ INSERT INTO `usersubmissions` (`SubmissionID`, `EvaluationID`, `CountryCriterion
 (50, 9, 251, 2),
 (51, 9, 244, 12),
 (52, 9, 247, 6),
-(53, 9, 249, 15);
+(53, 9, 249, 15),
+(54, 13, 4, 4),
+(55, 13, 6, 10),
+(56, 13, 11, 8),
+(57, 13, 12, 4),
+(58, 13, 16, 0),
+(59, 13, 257, 10),
+(60, 14, 5, 2),
+(61, 14, 6, 10),
+(62, 14, 11, 8),
+(63, 14, 13, 6),
+(64, 14, 16, 0),
+(65, 14, 258, 0),
+(66, 15, 5, 2),
+(67, 15, 8, 6),
+(68, 15, 9, 4),
+(69, 15, 12, 4),
+(70, 15, 16, 0),
+(71, 15, 257, 10),
+(72, 16, 5, 2),
+(73, 16, 8, 6),
+(74, 16, 11, 8),
+(75, 16, 13, 6),
+(76, 16, 17, 12),
+(77, 16, 257, 10),
+(78, 18, 1, 10),
+(79, 18, 6, 10),
+(80, 18, 11, 8),
+(81, 18, 13, 6),
+(82, 18, 17, 12),
+(83, 18, 256, 15),
+(84, 19, 5, 2),
+(85, 19, 6, 10),
+(86, 19, 11, 8),
+(87, 19, 14, 8),
+(88, 19, 17, 12),
+(89, 19, 257, 10),
+(90, 20, 4, 4),
+(91, 20, 7, 8),
+(92, 20, 9, 4),
+(93, 20, 13, 6),
+(94, 20, 16, 0),
+(95, 20, 257, 10),
+(96, 21, 128, 20),
+(97, 21, 138, 15),
+(98, 21, 141, 2),
+(99, 21, 145, 10),
+(100, 21, 131, 4),
+(101, 21, 136, 15),
+(102, 22, 129, 0),
+(103, 22, 137, 10),
+(104, 22, 141, 2),
+(105, 22, 146, 0),
+(106, 22, 130, 2),
+(107, 22, 134, 10),
+(108, 23, 5, 2),
+(109, 23, 8, 6),
+(110, 23, 11, 8),
+(111, 23, 15, 10),
+(112, 23, 16, 0),
+(113, 23, 258, 0),
+(114, 24, 1, 10),
+(115, 24, 6, 10),
+(116, 24, 10, 6),
+(117, 24, 15, 10),
+(118, 24, 17, 12),
+(119, 24, 255, 20),
+(120, 25, 18, 10),
+(121, 25, 25, 6),
+(122, 25, 26, 4),
+(123, 25, 29, 4),
+(124, 25, 34, 12),
+(125, 26, 20, 6),
+(126, 26, 23, 10),
+(127, 26, 27, 6),
+(128, 26, 29, 4),
+(129, 26, 34, 12),
+(130, 27, 3, 6),
+(131, 27, 6, 10),
+(132, 27, 11, 8),
+(133, 27, 14, 8),
+(134, 27, 16, 0),
+(135, 27, 258, 0),
+(136, 28, 4, 4),
+(137, 28, 8, 6),
+(138, 28, 11, 8),
+(139, 28, 15, 10),
+(140, 28, 17, 12),
+(141, 28, 258, 0),
+(142, 29, 5, 2),
+(143, 29, 6, 10),
+(144, 29, 11, 8),
+(145, 29, 15, 10),
+(146, 29, 16, 0),
+(147, 29, 258, 0),
+(148, 30, 183, 20),
+(149, 30, 188, 8),
+(150, 30, 191, 15),
+(151, 30, 194, 8),
+(152, 30, 196, 0),
+(153, 30, 197, 2);
 
 -- --------------------------------------------------------
 
@@ -872,6 +1013,12 @@ INSERT INTO `visacriteria` (`VisaCriteriaID`, `CriterionID`, `VisaCategoryID`) V
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `blog`
+--
+ALTER TABLE `blog`
+  ADD PRIMARY KEY (`blog_post_id`);
 
 --
 -- Indexes for table `countries`
@@ -1006,6 +1153,12 @@ ALTER TABLE `visacriteria`
 --
 
 --
+-- AUTO_INCREMENT for table `blog`
+--
+ALTER TABLE `blog`
+  MODIFY `blog_post_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
 -- AUTO_INCREMENT for table `countrycriteria`
 --
 ALTER TABLE `countrycriteria`
@@ -1027,7 +1180,7 @@ ALTER TABLE `eligibilitythreshold`
 -- AUTO_INCREMENT for table `evaluations`
 --
 ALTER TABLE `evaluations`
-  MODIFY `EvaluationID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `EvaluationID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- AUTO_INCREMENT for table `immigration_insights`
@@ -1081,7 +1234,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `usersubmissions`
 --
 ALTER TABLE `usersubmissions`
-  MODIFY `SubmissionID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
+  MODIFY `SubmissionID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=154;
 
 --
 -- AUTO_INCREMENT for table `visacategories`

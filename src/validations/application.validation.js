@@ -32,5 +32,5 @@ module.exports = {
 		param("country_code")
 			.exists({ checkFalsy: true })
 			.withMessage("Country Code is required"),
-	],
+	]
 }

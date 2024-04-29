@@ -13,6 +13,7 @@ module.exports = {
         const userID = req.userDecodedData.user_id;
         const now = Math.floor(Date.now() / 1000);
         let score = 0;
+        let recommendations = [];
         let report = '';
 
         let connection;
@@ -77,9 +78,13 @@ module.exports = {
 
                 //get option score
                 const [ scores ] = await connection.execute(`
-                    SELECT PointsValue
-                    FROM countrycriteria
-                    WHERE CountryCriterionID = ?
+                    SELECT a.CountryCode, a.VisaCriteriaID, a.PointsValue, a.CriteriaOptions, b.CriterionID, b.VisaCategoryID, c.CriterionName, d.CategoryName, e.CountryName
+                    FROM countrycriteria a 
+                    LEFT JOIN visacriteria b ON a.VisaCriteriaID = b.VisaCriteriaID
+                    LEFT JOIN criteria c ON b.CriterionID = c.CriterionID
+                    LEFT JOIN visacategories d ON b.VisaCategoryID = d.VisaCategoryID
+                    LEFT JOIN countries e ON a.CountryCode = e.CountryCode
+                    WHERE a.CountryCriterionID = ?
                     LIMIT 1`,
                     [ option ]
                 );
@@ -88,6 +93,47 @@ module.exports = {
 
                 //add this score to the global score
                 score += optionScore;
+
+                //get the max score for the selected option
+                const [ max ] = await connection.execute(`
+                    SELECT MAX(PointsValue) as maximun_points
+                    FROM countrycriteria  
+                    WHERE VisaCriteriaID = ? 
+                    AND CountryCode = ? 
+                    LIMIT 1`,
+                    [ scores[0].VisaCriteriaID, scores[0].CountryCode ]
+                );
+
+                if(optionScore !== parseInt(max[0].maximun_points))
+                {
+                    console.log({optionScore, criterion: scores[0].CriterionName, max: parseInt(max[0].maximun_points)})
+                    const recommendation = scores[0].CriterionName === "Age" ? 
+                    `We consider your age (${scores[0].CriteriaOptions}) a little bit inappropriate for the ${scores[0].CountryName} ${scores[0].CategoryName}` :
+                    scores[0].CriterionName === "Highest Education Level" ?
+                    `Your highest educational level (${scores[0].CriteriaOptions}) is not so good for the ${scores[0].CountryName} ${scores[0].CategoryName}`:
+                    scores[0].CriterionName === "Language Proficiency" ?
+                    `Your language proficiency level (${scores[0].CriteriaOptions}) needs to be improved in order to increase your chances in getting the ${scores[0].CountryName} ${scores[0].CategoryName}`:
+                    scores[0].CriterionName === "Work Experience" ?
+                    `You need to improve your work experience in order to increase your eligibility for the ${scores[0].CountryName} ${scores[0].CategoryName}`:
+                    scores[0].CriterionName === "Financial Resources" ?
+                    `Your financial strength (${scores[0].CriteriaOptions}) needs to be improved to fetch you eligibility for the ${scores[0].CountryName} ${scores[0].CategoryName}`:
+                    scores[0].CriterionName === "Job Offer from Local Employer" ?
+                    `You should have a job offer from an employer in ${scores[0].CountryName} to be able to qualify for a ${scores[0].CategoryName}`:
+                    scores[0].CriterionName === "Wage Offered" ?
+                    `We sincerely think that ${scores[0].CriteriaOptions} as wage offered will not be enough to sustain you in ${scores[0].CountryName}. We encourage you to look for better opportunities in ${scores[0].CountryName}`:
+                    scores[0].CriterionName === "H-1B Approval" ?
+                    `If you dont have H-1B Approval, you might not be able to get the ${scores[0].CategoryName} in ${scores[0].CountryName}`:
+                    max[0].CriterionName === "Occupational Skill level" ?
+                    `Your Occupational Skill Level of ${scores[0].CriteriaOptions} needs to be improved to be able to land a ${scores[0].CategoryName} in ${scores[0].CountryName}`:
+                    scores[0].CriterionName === "Health Exam Result" ?
+                    `You need to have your Health Exam Results to qualify for a ${scores[0].CategoryName} in ${scores[0].CountryName}`:
+                    scores[0].CriterionName === "Employer Sponsorship" ?
+                    `Having an employer sponsirship will increase your chances for a ${scores[0].CategoryName} in ${scores[0].CountryName}`:
+                    scores[0].CriterionName === "IELTS Score" ?
+                    `Increasing your IELTS Score from ${scores[0].CriteriaOptions} to ${scores[0].CriteriaOptions} will increase your chances for a ${scores[0].CategoryName} in ${scores[0].CountryName}`: "";
+
+                    recommendations.push(recommendation);
+                }
 
                 //insert candidate selected option into database
                 await connection.execute(`
@@ -128,6 +174,7 @@ module.exports = {
             else if(Countries.length > 0)
             {
                 let countriesHTML = '<br/>';
+                let recommendationsHTML = "<ol>";
 
                 for(let i = 0; i < Countries.length; i++)
                 {
@@ -137,13 +184,35 @@ module.exports = {
                     `
                 }
 
-                report += `Sorry!!! You are not eligible to immigrate to <b>${threshold.CountryName}</b>. With a score of <b>${score}</b> you do not make up to ${threshold.ThresholdPoint} which is the threshold point to qualify. However, we have good news!!! You qualify to immigrate to the following countries ${countriesHTML}
+                for(let i = 0; i < recommendations.length; i++)
+                {
+                    const r = recommendations[i];
+                    recommendationsHTML += `
+                        <li>${r}</li>
+                    `
+                }
+
+                recommendationsHTML += `</ol>`;
+
+                report += `Sorry!!! You are not eligible to immigrate to <b>${threshold.CountryName}</b>. With a score of <b>${score}</b> you do not make up to ${threshold.ThresholdPoint} which is the threshold point to qualify. However, we have good news!!! You qualify to immigrate to the following countries ${countriesHTML}<br/><br/><b>REASONS & RECOMMENDATIONS</b><br/>${recommendationsHTML}
                 `;
             }
 
             else
             {
-                report += `Sorry!!! With a score of <b>${score}</b>, you do not qualify to immigrate to <b>${threshold.CountryName}</b> or any of the available countries. Please work on your profile and come back later.
+                let recommendationsHTML = "<ol>";
+
+                for(let i = 0; i < recommendations.length; i++)
+                {
+                    const r = recommendations[i];
+                    recommendationsHTML += `
+                        <li>${r}</li>
+                    `
+                }
+
+                recommendationsHTML += `</ol>`;
+
+                report += `Sorry!!! With a score of <b>${score}</b>, you do not qualify to immigrate to <b>${threshold.CountryName}</b> or any of the available countries. Please work on your profile and come back later.<br/><br/><b>REASONS & RECOMMENDATIONS</b><br/>${recommendationsHTML}
                 `
             }
 

@@ -7,6 +7,37 @@ $(function () {
 	$(document).ready(function($) {
         //profile update
         submitProfileUpdate();
+        //sidebar open
+        var isSidebarOpen = localStorage.getItem('sidebarOpen');
+        if (isSidebarOpen === 'true' || isSidebarOpen === undefined || isSidebarOpen === null) {
+            $('.left-side-menu').css({left: '0px'});
+            $('.content-page').css({marginLeft: '240px'});
+            $('.footer').css({left: '240px'});
+            $('.logo-box').css({backgroundColor: '#ffffff', width: '240px'});
+        }
+        else
+        {
+            $('.logo-box').css({backgroundColor: "#ebeff2", width: '100px'});
+            $('.left-side-menu').css({left: '-240px'});
+            $('.content-page').css({marginLeft: '0px'});
+            $('.footer').css({left: '0px'});
+        }
+
+        $('.hide-left-menu').click(function () {
+            if ($('.left-side-menu').css('left') === '0px') {
+                $('.logo-box').css({backgroundColor: "#ebeff2", width: '100px'});
+                $('.left-side-menu').animate({left: '-240px'});
+                $('.content-page').animate({marginLeft: '0px'});
+                $('.footer').animate({left: '0px'});
+                localStorage.setItem('sidebarOpen', 'false');
+            } else {
+                $('.logo-box').css({backgroundColor: "#ffffff", width: '240px'});
+                $('.left-side-menu').animate({left: '0px'});
+                $('.content-page').animate({marginLeft: '240px'});
+                $('.footer').animate({left: '240px'});
+                localStorage.setItem('sidebarOpen', 'true');
+            }
+        });
     });
 
     function submitProfileUpdate()

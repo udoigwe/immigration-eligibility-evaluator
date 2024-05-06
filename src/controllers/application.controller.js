@@ -311,19 +311,11 @@ module.exports = {
 
                     //select the maximum possible score for this criterion, country and visa category
                     const [ maxScore ] = await connection.execute(`
-                        SELECT MAX(PointsValue) AS MaxPoint 
-                        FROM ( 
-                            SELECT a.*, b.CriterionID, b.VisaCategoryID, c.CriterionName, d.CategoryName 
-                            FROM countrycriteria a 
-                            LEFT JOIN visacriteria b ON a.VisaCriteriaID = b.VisaCriteriaID 
-                            LEFT JOIN criteria c ON b.CriterionID = c.CriterionID 
-                            LEFT JOIN visacategories d ON b.VisaCategoryID = d.VisaCategoryID 
-                            WHERE b.VisaCategoryID = ?
-                            AND a.CountryCode = ?
-                            AND b.CriterionID = ?
-                        )X `,
+                        SELECT MAX(PointsValue) AS MaxPoint FROM 
+                        (
+                             SELECT a.*, b.CriterionID, b.VisaCategoryID, c.CriterionName, d.CategoryName FROM countrycriteria a LEFT JOIN visacriteria b ON a.VisaCriteriaID = b.VisaCriteriaID LEFT JOIN criteria c ON b.CriterionID = c.CriterionID LEFT JOIN visacategories d ON b.VisaCategoryID = d.VisaCategoryID WHERE b.VisaCategoryID = ? AND a.CountryCode = ? AND b.CriterionID = ? 
+                        )X GROUP BY X.VisaCategoryID, X.CountryCode, X.CriterionID `,
                         [ criterion.VisaCategoryID, criterion.CountryCode, criterion.CriterionID ]
-
                     );
                     const maxscore = parseInt(maxScore[0].MaxPoint);
 

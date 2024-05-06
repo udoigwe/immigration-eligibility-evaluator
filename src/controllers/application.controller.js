@@ -106,9 +106,8 @@ module.exports = {
 
                 if(optionScore !== parseInt(max[0].maximun_points))
                 {
-                    console.log({optionScore, criterion: scores[0].CriterionName, max: parseInt(max[0].maximun_points)})
-                    const recommendation = scores[0].CriterionName === "Age" ? 
-                    `We consider your age (${scores[0].CriteriaOptions}) a little bit inappropriate for the ${scores[0].CountryName} ${scores[0].CategoryName}` :
+                    const recommendation = /* scores[0].CriterionName === "Age" ? 
+                    `We consider your age (${scores[0].CriteriaOptions}) a little bit inappropriate for the ${scores[0].CountryName} ${scores[0].CategoryName}` : */
                     scores[0].CriterionName === "Highest Education Level" ?
                     `Your highest educational level (${scores[0].CriteriaOptions}) is not so good for the ${scores[0].CountryName} ${scores[0].CategoryName}`:
                     scores[0].CriterionName === "Language Proficiency" ?
@@ -241,6 +240,7 @@ module.exports = {
             VisaCategoryID
         } = req.body;
 
+        const issuLogs = [];
         const suitableCountries = [];
         const benchMark = 20;
         let totalPoints = 0
@@ -309,30 +309,68 @@ module.exports = {
                 {
                     const criterion = criteria[j];
 
+                    //select the maximum possible score for this criterion, country and visa category
+                    const [ maxScore ] = await connection.execute(`
+                        SELECT MAX(PointsValue) AS MaxPoint, VisaCategoryID, CriterionID, CountryCode 
+                        FROM ( 
+                            SELECT a.*, b.CriterionID, b.VisaCategoryID, c.CriterionName, d.CategoryName 
+                            FROM countrycriteria a 
+                            LEFT JOIN visacriteria b ON a.VisaCriteriaID = b.VisaCriteriaID 
+                            LEFT JOIN criteria c ON b.CriterionID = c.CriterionID 
+                            LEFT JOIN visacategories d ON b.VisaCategoryID = d.VisaCategoryID 
+                        )X 
+                        WHERE CountryCode = ? 
+                        AND VisaCategoryID = ? 
+                        AND CriterionID = ?`,
+                        [ criterion.CountryCode, criterion.VisaCategoryID, criterion.CriterionID]
+
+                    );
+                    const maxscore = parseInt(maxScore[0].MaxPoint);
+
                     if(criterion.CriterionName === "Age")
                     {
                         if(criterion.CriteriaOptions === "18-21" && userAge >= 18 && userAge <= 21)
                         {
                             countryPoints += criterion.PointsValue;
                             totalPoints += criterion.PointsValue;
+
+                            if(maxscore !== criterion.PointsValue && !issuLogs.includes("Age"))
+                            {
+                                issuLogs.push("Age")
+                            }
                         }
                         
                         if(criterion.CriteriaOptions === "22-25" && userAge >= 22 && userAge <= 25)
                         {
                             countryPoints += criterion.PointsValue;
                             totalPoints += criterion.PointsValue;
+
+                            if(maxscore !== criterion.PointsValue && !issuLogs.includes("Age"))
+                            {
+                                issuLogs.push("Age")
+                            }
                         }
                         
                         if(criterion.CriteriaOptions === "26-30" && userAge >= 26 && userAge <= 30)
                         {
                             countryPoints += criterion.PointsValue;
                             totalPoints += criterion.PointsValue;
+
+                            if(maxscore !== criterion.PointsValue && !issuLogs.includes("Age"))
+                            {
+                                issuLogs.push("Age")
+                            }
                         }
                         
                         if(criterion.CriteriaOptions === "36-Above" && userAge >= 36)
                         {
                             countryPoints += criterion.PointsValue;
                             totalPoints += criterion.PointsValue;
+
+                            if(maxscore !== criterion.PointsValue && !issuLogs.includes("Age"))
+                            {
+                                issuLogs.push("Age")
+                            }
                         }
                     }
 
@@ -340,12 +378,22 @@ module.exports = {
                     {
                         countryPoints += criterion.PointsValue;
                         totalPoints += criterion.PointsValue;
+
+                        if(maxscore !== criterion.PointsValue && !issuLogs.includes("Highest Education Level"))
+                        {
+                            issuLogs.push("Highest Education Level")
+                        }
                     }
 
                     if(criterion.CriterionName === "Language Proficiency" && criterion.CriteriaOptions === loggedUser.language_proficiency)
                     {
                         countryPoints += criterion.PointsValue;
                         totalPoints += criterion.PointsValue;
+
+                        if(maxscore !== criterion.PointsValue && !issuLogs.includes("Language Proficiency"))
+                        {
+                            issuLogs.push("Language Proficiency")
+                        }
                     }
 
                     if(criterion.CriterionName === "Work Experience")
@@ -354,24 +402,44 @@ module.exports = {
                         {
                             countryPoints += criterion.PointsValue;
                             totalPoints += criterion.PointsValue
+
+                            if(maxscore !== criterion.PointsValue && !issuLogs.includes("Work Experience"))
+                            {
+                                issuLogs.push("Work Experience")
+                            }
                         }
                         
                         if(criterion.CriteriaOptions === "3-5 years" && loggedUser.years_of_experience >= 3 && loggedUser.years_of_experience <= 5)
                         {
                             countryPoints += criterion.PointsValue;
                             totalPoints += criterion.PointsValue;
+
+                            if(maxscore !== criterion.PointsValue && !issuLogs.includes("Work Experience"))
+                            {
+                                issuLogs.push("Work Experience")
+                            }
                         }
                         
                         if(criterion.CriteriaOptions === "6-10 years" && loggedUser.years_of_experience >= 6 && loggedUser.years_of_experience <= 10)
                         {
                             countryPoints += criterion.PointsValue;
                             totalPoints += criterion.PointsValue
+
+                            if(maxscore !== criterion.PointsValue && !issuLogs.includes("Work Experience"))
+                            {
+                                issuLogs.push("Work Experience")
+                            }
                         }
                         
                         if(criterion.CriteriaOptions === "11 years and above" && loggedUser.years_of_experience >= 11)
                         {
                             countryPoints += criterion.PointsValue;
                             totalPoints += criterion.PointsValue
+
+                            if(maxscore !== criterion.PointsValue && !issuLogs.includes("Work Experience"))
+                            {
+                                issuLogs.push("Work Experience")
+                            }
                         }
                     }
                 }
@@ -389,7 +457,8 @@ module.exports = {
 
             res.json({
                 error: false,
-                suitableCountries
+                suitableCountries,
+                issuLogs
             })
         }
         catch(e)

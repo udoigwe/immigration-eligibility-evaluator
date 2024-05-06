@@ -68,7 +68,6 @@ $(function () {
                     error: function(req, status, err)
                     {
                         showSimpleMessage("Attention", req.responseJSON.message, "error");
-                        alert(req.responseJSON.message);
                         unblockUI();
                     }
                 });

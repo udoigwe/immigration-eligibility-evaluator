@@ -261,10 +261,27 @@ $(function () {
                 success: function(response)
                 {
                     const suitableCountries = response.suitableCountries;
+                    const issuLogs = response.issuLogs;
+
                     let html = '';
+                    let issueHtml = '';
+
+                    if(suitableCountries.length === 0 && issuLogs.length > 0)
+                    {
+                        for(var i = 0; i < issuLogs.length; i++)
+                        {
+                            const issue = issuLogs[i];
+
+                            issueHtml += `
+                                <li>${issue}</li>
+                            `
+                        }
+                    }
+                    
                     let emptyHTML = `
                         <div class="card card-body" style="margin-bottom: 20px; text-transform: uppercase; background-color: #F0F0F0">
-                            <h5 class="card-text date_of_birth mx-auto text-center">Your profile is not suitable for any country. Please improve your profile</h4>
+                            <h5 class="card-text date_of_birth mx-auto text-center">Your profile is not suitable for any country. Please improve upon the following areas of your profile</h4>
+                            <ol>${issueHtml}</ol>
                         </div>
                     `
 

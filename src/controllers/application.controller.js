@@ -127,9 +127,9 @@ module.exports = {
                     scores[0].CriterionName === "Health Exam Result" ?
                     `You need to have your Health Exam Results to qualify for a ${scores[0].CategoryName} in ${scores[0].CountryName}`:
                     scores[0].CriterionName === "Employer Sponsorship" ?
-                    `Having an employer sponsirship will increase your chances for a ${scores[0].CategoryName} in ${scores[0].CountryName}`:
+                    `Having an employer sponsirship will increase your chances for a ${scores[0].CategoryName} in ${scores[0].CountryName}`: `Increasing your IELTS Score will increase your chances for a ${scores[0].CategoryName} in ${scores[0].CountryName}`/* 
                     scores[0].CriterionName === "IELTS Score" ?
-                    `Increasing your IELTS Score will increase your chances for a ${scores[0].CategoryName} in ${scores[0].CountryName}`: "";
+                    `Increasing your IELTS Score will increase your chances for a ${scores[0].CategoryName} in ${scores[0].CountryName}`: ""; */
 
                     recommendations.push(recommendation);
                 }
@@ -311,18 +311,18 @@ module.exports = {
 
                     //select the maximum possible score for this criterion, country and visa category
                     const [ maxScore ] = await connection.execute(`
-                        SELECT MAX(PointsValue) AS MaxPoint, VisaCategoryID, CriterionID, CountryCode 
+                        SELECT MAX(PointsValue) AS MaxPoint 
                         FROM ( 
                             SELECT a.*, b.CriterionID, b.VisaCategoryID, c.CriterionName, d.CategoryName 
                             FROM countrycriteria a 
                             LEFT JOIN visacriteria b ON a.VisaCriteriaID = b.VisaCriteriaID 
                             LEFT JOIN criteria c ON b.CriterionID = c.CriterionID 
                             LEFT JOIN visacategories d ON b.VisaCategoryID = d.VisaCategoryID 
-                        )X 
-                        WHERE CountryCode = ? 
-                        AND VisaCategoryID = ? 
-                        AND CriterionID = ?`,
-                        [ criterion.CountryCode, criterion.VisaCategoryID, criterion.CriterionID]
+                            WHERE b.VisaCategoryID = ?
+                            AND a.CountryCode = ?
+                            AND b.CriterionID = ?
+                        )X `,
+                        [ criterion.VisaCategoryID, criterion.CountryCode, criterion.CriterionID ]
 
                     );
                     const maxscore = parseInt(maxScore[0].MaxPoint);

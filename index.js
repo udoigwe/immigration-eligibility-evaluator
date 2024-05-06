@@ -7,7 +7,7 @@ process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = 0;
 //variables
 const express = require('express');
 const app = express();
-const port = process.env.PORT || 8001;
+const port = process.env.PORT || 6001;
 const cors = require('cors');
 const useragent = require('express-useragent');
 const swaggerUi = require("swagger-ui-express");
